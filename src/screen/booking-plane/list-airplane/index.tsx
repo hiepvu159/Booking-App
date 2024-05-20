@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import CardItem from '../../components/card-item';
+import CardItem from '../../../components/card-item';
 
 export default function ListPlane() {
   return (

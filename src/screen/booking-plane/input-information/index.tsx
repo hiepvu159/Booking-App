@@ -1,41 +1,42 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import CardDetailPlane from '../../components/card-detail-plane';
-import EmailIconSVG from '../../../assets/svg/EmailIconSVG';
-import ArrowRightForItemIconSVG from '../../../assets/svg/ArrowRightForItem';
-import UserIconSVG from '../../../assets/svg/UserIconSVG';
-import SeatAirPlaneIconSVG from '../../../assets/svg/SeatAirPlaneIconSVG';
-import BagIconSVG from '../../../assets/svg/BagIconSVG';
+import CardDetailPlane from '../../../components/card-detail-plane';
+import EmailIconSVG from '../../../../assets/svg/EmailIconSVG';
+import ArrowRightForItemIconSVG from '../../../../assets/svg/ArrowRightForItem';
+import UserIconSVG from '../../../../assets/svg/UserIconSVG';
+import SeatAirPlaneIconSVG from '../../../../assets/svg/SeatAirPlaneIconSVG';
+import BagIconSVG from '../../../../assets/svg/BagIconSVG';
 import { Button } from '@rneui/themed';
+import { useNavigation } from '@react-navigation/native';
 
+const airPlaneOptionals = [
+  {
+    id: 1,
+    icon: <BagIconSVG />,
+    title: 'Hành lý',
+    price: '90.000',
+    description: 'Một số chuyến bay đã có hành lý. Chạm để xem thêm',
+  },
+  {
+    id: 2,
+    icon: <SeatAirPlaneIconSVG />,
+    title: 'Số ghế',
+    price: '90.000',
+    description:
+      'Cửa sổ hay lối đi? Chọn chỗ ngồi tốt nhất giúp bạn thoải mái trong suốt chuyến đi.',
+  },
+  {
+    id: 3,
+    icon: <BagIconSVG />,
+    title: 'Hành lý xách tay bổ sung',
+    price: '90.000',
+    description:
+      '7kg hành lý xách tay đã đủ đổi với bạn? Nếu chưa, bạn có thể nhấn vào để mua thêm',
+  },
+];
 export default function InputInfomation() {
-  const airPlaneOptionals = [
-    {
-      id: 1,
-      icon: <BagIconSVG />,
-      title: 'Hành lý',
-      price: '90.000',
-      description: 'Một số chuyến bay đã có hành lý. Chạm để xem thêm',
-    },
-    {
-      id: 2,
-      icon: <SeatAirPlaneIconSVG />,
-      title: 'Số ghế',
-      price: '90.000',
-      description:
-        'Cửa sổ hay lối đi? Chọn chỗ ngồi tốt nhất giúp bạn thoải mái trong suốt chuyến đi.',
-    },
-    {
-      id: 3,
-      icon: <BagIconSVG />,
-      title: 'Hành lý xách tay bổ sung',
-      price: '90.000',
-      description:
-        '7kg hành lý xách tay đã đủ đổi với bạn? Nếu chưa, bạn có thể nhấn vào để mua thêm',
-    },
-  ];
-
+  const { navigate } = useNavigation();
   return (
     <ScrollView style={{ height: '100%', backgroundColor: '#E8EBEE' }}>
       <View>
@@ -68,7 +69,8 @@ export default function InputInfomation() {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                 },
-              ]}>
+              ]}
+              onTouchStart={() => navigate('InfoContactPlane' as never)}>
               <View
                 style={[
                   {
@@ -102,7 +104,8 @@ export default function InputInfomation() {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                 },
-              ]}>
+              ]}
+              onTouchStart={() => navigate('InfoCustomer' as never)}>
               <View
                 style={[
                   {
@@ -202,7 +205,10 @@ export default function InputInfomation() {
           </View>
         </View>
       </View>
-      <Button title={'Tiếp tục'} onPress={() => console.log('hêh')} />
+      <Button
+        title={'Tiếp tục'}
+        onPress={() => navigate('PaymentPlane' as never)}
+      />
     </ScrollView>
   );
 }

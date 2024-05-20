@@ -66,7 +66,7 @@ export default function BottomNav() {
             return <CarIconSVG />;
           },
 
-          header: () => <Header />,
+          header: () => <HeaderForSearch title="Xe khách" />,
         }}
       />
       <Tab.Screen
@@ -77,7 +77,7 @@ export default function BottomNav() {
           tabBarIcon: () => {
             return <HotelIconSVG />;
           },
-          header: () => <Header />,
+          header: () => <HeaderForSearch title="Khách sạn" />,
         }}
       />
       <Tab.Screen

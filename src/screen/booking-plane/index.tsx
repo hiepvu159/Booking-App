@@ -11,7 +11,7 @@ import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
 import { useNavigation } from '@react-navigation/native';
 
-const FORMAT_DATE = 'DD-MM-YYYY';
+export const FORMAT_DATE = 'DD-MM-YYYY';
 
 export default function BookingPlane() {
   const { navigate } = useNavigation();
