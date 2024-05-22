@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import CardItemCar from '../card-item';
+import CardItemHotel from '../card-item';
 
 export default function ListHotels() {
   return (
     <View style={styles.container}>
-      <CardItemCar />
+      <CardItemHotel />
     </View>
   );
 }

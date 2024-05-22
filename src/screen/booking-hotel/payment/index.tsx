@@ -5,7 +5,7 @@ import ArrowRightForItemIconSVG from '../../../../assets/svg/ArrowRightForItem';
 import WalletIconSVG from '../../../../assets/svg/WalletIconSVG';
 import { Button, Divider } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
-import CardPaymentCar from '../card-payment-car';
+import CardPaymentCar from '../card-payment-hotel';
 
 export default function PaymentHotel() {
   const { navigate } = useNavigation();

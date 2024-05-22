@@ -15,12 +15,13 @@ import InputInfomationCar from '../screen/booking-car/input-information';
 import InfoContactCar from '../screen/booking-car/InfoContact';
 import InfoCustomerCar from '../screen/booking-car/info-customer';
 import PaymentCar from '../screen/booking-car/payment';
-import ListHotels from '../screen/booking-hotel/list-car';
+import ListHotels from '../screen/booking-hotel/list-hotels';
 import InputInfomationHotel from '../screen/booking-hotel/input-information';
 import InfoContactHotel from '../screen/booking-hotel/InfoContact';
 import InfoCustomerHotel from '../screen/booking-hotel/info-customer';
 import PaymentHotel from '../screen/booking-hotel/payment';
 import LoginScreen from '../screen/login';
+import DetailHotel from '../screen/booking-hotel/detail-hotel';
 
 const Stack = createStackNavigator();
 export default function Navigation() {
@@ -289,6 +290,21 @@ export default function Navigation() {
           title: 'Xác nhận thanh toán',
           headerStyle: {
             backgroundColor: '#1B3B68',
+          },
+          headerTitleStyle: {
+            color: '#fff',
+          },
+          headerTintColor: '#fff',
+        }}
+      />
+
+      <Stack.Screen
+        name="DetailHotel"
+        component={DetailHotel}
+        options={{
+          title: 'Thông tin khách sạn',
+          headerStyle: {
+            backgroundColor: '#5B9EDE',
           },
           headerTitleStyle: {
             color: '#fff',

@@ -8,13 +8,14 @@ import moment from 'moment';
 import { FORMAT_DATE } from '../booking-plane';
 import CalendarIconSVG from '../../../assets/svg/CalendarIconSVG';
 import ModalSelect from '../../components/modal-select/indext';
+import RoomIconSVG from '../../../assets/svg/RoomIconSVG';
 
 export default function BookingHotelScreen() {
   const { navigate } = useNavigation();
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState();
-  const [dateFrom, setDateFrom] = useState(new Date());
-  const [dateTo, setDateTo] = useState(new Date());
+  const [dateFrom, setDateFrom] = useState(moment().toDate());
+  const [dateTo, setDateTo] = useState(moment().add(1, 'day').toDate());
   const [isOpenModalDate, setIsOpenModalDate] = useState({
     dateFrom: false,
     dateTo: false,
@@ -46,19 +47,13 @@ export default function BookingHotelScreen() {
       <ScrollView>
         <Card containerStyle={styles.card}>
           <Input
-            label="Từ"
+            label="Địa điểm"
             leftIcon={<CarIconSVG />}
-            placeholder="Vui lòng chọn điểm đi"
+            placeholder="Vui lòng chọn địa điểm"
             onTouchStart={() => handleFocus('from')}
             showSoftInputOnFocus={false}
           />
-          <Input
-            label="Đến"
-            leftIcon={<CarIconSVG />}
-            onTouchStart={() => handleFocus('to')}
-            showSoftInputOnFocus={false}
-            placeholder="Vui lòng chọn điểm đến"
-          />
+
           <DatePicker
             modal
             mode="date"
@@ -70,15 +65,15 @@ export default function BookingHotelScreen() {
               setDateFrom(e);
               handleCloseModalDateFrom();
             }}
-            title={'Ngày khởi hành'}
+            title={'Ngày '}
             confirmText="Xác nhận"
             cancelText="Quay lại"
           />
           <Input
             value={moment(dateFrom).format(FORMAT_DATE).toString()}
-            label="Ngày khởi hành"
+            label="Ngày "
             leftIcon={<CalendarIconSVG />}
-            placeholder="Vui lòng chọn ngày khởi hành"
+            placeholder="Vui lòng chọn ngày "
             onTouchStart={() =>
               setIsOpenModalDate((prev) => ({
                 ...prev,
@@ -116,12 +111,17 @@ export default function BookingHotelScreen() {
             }
             showSoftInputOnFocus={false}
           />
-
-          <Input label="Số ghế" keyboardType="decimal-pad" defaultValue="1" />
+          <Input
+            label="Loại phòng"
+            leftIcon={<RoomIconSVG />}
+            placeholder="Vui lòng chọn loại phòng"
+            onTouchStart={() => handleFocus('from')}
+            showSoftInputOnFocus={false}
+          />
           <Button
             title={'Tìm kiếm'}
             buttonStyle={styles.btnSearch}
-            onPress={() => navigate('ListCar' as never)}
+            onPress={() => navigate('ListHotel' as never)}
           />
         </Card>
       </ScrollView>
