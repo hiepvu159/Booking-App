@@ -22,8 +22,32 @@ import InfoCustomerHotel from '../screen/booking-hotel/info-customer';
 import PaymentHotel from '../screen/booking-hotel/payment';
 import LoginScreen from '../screen/login';
 import DetailHotel from '../screen/booking-hotel/detail-hotel';
+import SelectRoom from '../screen/booking-hotel/SelectRoom';
 
-const Stack = createStackNavigator();
+export type RootStackParamList = {
+  ListCar: { data: string };
+  BottomTabs: { data: string };
+  Home: any;
+  ListPlane: any;
+  InfoPlane: any;
+  InfoContactPlane: any;
+  InfoCustomer: any;
+  PaymentPlane: any;
+  InfoCar: any;
+  InfoContactCar: any;
+  InfoCustomerCar: any;
+  PaymentCar: any;
+  ListHotel: any;
+  login: any;
+  SelectRoom: any;
+  DetailHotel: any;
+  PaymentHotel: any;
+  InfoCustomerHotel: any;
+  InfoContactHotel: any;
+  InfoHotel: any;
+};
+
+const Stack = createStackNavigator<RootStackParamList>();
 export default function Navigation() {
   return (
     <Stack.Navigator>
@@ -303,6 +327,21 @@ export default function Navigation() {
         component={DetailHotel}
         options={{
           title: 'Thông tin khách sạn',
+          headerStyle: {
+            backgroundColor: '#5B9EDE',
+          },
+          headerTitleStyle: {
+            color: '#fff',
+          },
+          headerTintColor: '#fff',
+        }}
+      />
+
+      <Stack.Screen
+        name="SelectRoom"
+        component={SelectRoom}
+        options={{
+          title: 'Chọn loại phòng',
           headerStyle: {
             backgroundColor: '#5B9EDE',
           },

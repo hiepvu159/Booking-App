@@ -8,13 +8,16 @@ import { FORMAT_DATE } from '../booking-plane';
 import moment from 'moment';
 import CalendarIconSVG from '../../../assets/svg/CalendarIconSVG';
 import CarIconSVG from '../../../assets/svg/CarIconSVG';
+import { LIST_ADDRESS } from '../../constant/constant';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../navigations/Navigation';
 
 export default function BookingCarScreen() {
-  const { navigate } = useNavigation();
+  const { navigate } = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [isOpen, setIsOpen] = useState(false);
+  const [valueAddress, setValueAddress] = useState('');
   const [data, setData] = useState();
   const [dateFrom, setDateFrom] = useState(new Date());
-  const [dateTo, setDateTo] = useState(new Date());
   const [isOpenModalDate, setIsOpenModalDate] = useState({
     dateFrom: false,
     dateTo: false,
@@ -35,12 +38,6 @@ export default function BookingCarScreen() {
     }));
   }, []);
 
-  const handleCloseModalDateTo = useCallback(() => {
-    setIsOpenModalDate((prev) => ({
-      ...prev,
-      dateTo: false,
-    }));
-  }, []);
   return (
     <View style={styles.wrapHeader}>
       <ScrollView>
@@ -51,14 +48,9 @@ export default function BookingCarScreen() {
             placeholder="Vui lòng chọn điểm đi"
             onTouchStart={() => handleFocus('from')}
             showSoftInputOnFocus={false}
+            value={valueAddress}
           />
-          <Input
-            label="Đến"
-            leftIcon={<CarIconSVG />}
-            onTouchStart={() => handleFocus('to')}
-            showSoftInputOnFocus={false}
-            placeholder="Vui lòng chọn điểm đến"
-          />
+
           <DatePicker
             modal
             mode="date"
@@ -88,48 +80,25 @@ export default function BookingCarScreen() {
             showSoftInputOnFocus={false}
           />
 
-          <DatePicker
-            modal
-            mode="date"
-            locale="vie"
-            open={isOpenModalDate.dateTo}
-            date={dateTo}
-            onCancel={handleCloseModalDateTo}
-            onConfirm={(e) => {
-              setDateTo(e);
-              handleCloseModalDateTo();
-            }}
-            title={'Ngày về'}
-            confirmText="Xác nhận"
-            cancelText="Quay lại"
-          />
-          <Input
-            value={moment(dateTo).format('DD-MM-YYYY').toString()}
-            label="Ngày về"
-            leftIcon={<CalendarIconSVG />}
-            placeholder="Vui lòng chọn ngày về"
-            onTouchStart={() =>
-              setIsOpenModalDate((prev) => ({
-                ...prev,
-                dateTo: true,
-              }))
-            }
-            showSoftInputOnFocus={false}
-          />
-
           <Input label="Số ghế" keyboardType="decimal-pad" defaultValue="1" />
           <Button
             title={'Tìm kiếm'}
             buttonStyle={styles.btnSearch}
-            onPress={() => navigate('ListCar' as never)}
+            onPress={() =>
+              navigate('ListCar', {
+                data: 'heelo',
+              })
+            }
           />
         </Card>
       </ScrollView>
       <ModalSelect
         isOpen={isOpen}
         onClose={onClose}
-        onSubmit={() => {}}
-        data={data}
+        onSubmit={(value) => {
+          setValueAddress(value);
+        }}
+        data={LIST_ADDRESS}
       />
     </View>
   );

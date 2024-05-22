@@ -6,6 +6,11 @@ import LocationIconSVG from '../../../../assets/svg/LocationIconSVG';
 import { Button, Divider } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 import ElevatorIconSVG from '../../../../assets/svg/ElevatorIconSVG';
+import AirConditionerIconSVG from '../../../../assets/svg/AirConditionerIconSVG';
+import ReceptionistIconSVG from '../../../../assets/svg/ReceptionistIconSVG';
+import WifiIconSVG from '../../../../assets/svg/WifiIconSVG';
+import CutleryIconSVG from '../../../../assets/svg/CutleryIconSVG';
+import ParkingIconSVG from '../../../../assets/svg/ParkingIconSVG';
 
 export default function DetailHotel() {
   const { navigate } = useNavigation();
@@ -50,7 +55,73 @@ export default function DetailHotel() {
           <Divider />
           <View style={{ paddingVertical: 10 }}>
             <Text>Tiện Nghi</Text>
-            <ElevatorIconSVG />
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginVertical: 10,
+              }}>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}>
+                <ElevatorIconSVG color="#5B9EDE" />
+                <Text style={styles.textUltis}>Thang máy</Text>
+              </View>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}>
+                <AirConditionerIconSVG color="#5B9EDE" />
+
+                <Text style={styles.textUltis}>Máy lạnh</Text>
+              </View>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}>
+                <ReceptionistIconSVG color="#5B9EDE" />
+
+                <Text style={styles.textUltis}>Lễ tân 24h</Text>
+              </View>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}>
+                <WifiIconSVG color="#5B9EDE" />
+
+                <Text style={styles.textUltis}>Wifi</Text>
+              </View>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}>
+                <CutleryIconSVG color="#5B9EDE" />
+
+                <Text style={styles.textUltis}>Nhà hàng</Text>
+              </View>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}>
+                <ParkingIconSVG color="#5B9EDE" />
+
+                <Text style={styles.textUltis}>Chỗ đỗ xe</Text>
+              </View>
+            </View>
           </View>
           <Divider />
           <View style={{ paddingVertical: 10 }}>
@@ -63,7 +134,7 @@ export default function DetailHotel() {
         title={'Chọn phòng'}
         size="lg"
         buttonStyle={{ backgroundColor: '#F4601F' }}
-        // onPress={() =>navigate('SelectRoom') as never}
+        onPress={() => navigate('SelectRoom' as never)}
       />
     </View>
   );
@@ -102,5 +173,9 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     width: '100%',
     padding: 15,
+  },
+  textUltis: {
+    // color:''
+    fontSize: 12,
   },
 });

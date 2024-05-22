@@ -46,7 +46,8 @@ export default function PaymentPlane() {
                   styles.fontSize14,
                   { fontWeight: '600', marginLeft: 10 },
                 ]}>
-                Phương thức thanh toán <Text style={{ color: 'red' }}>*</Text>
+                Phương thức thanh toán: Visa{' '}
+                <Text style={{ color: 'red' }}>*</Text>
               </Text>
             </View>
             <ArrowRightForItemIconSVG color="#2571E8" />
@@ -88,7 +89,7 @@ export default function PaymentPlane() {
                 </Text>
               </View>
               <Divider />
-              <View style={{ marginTop: 10 }}>
+              {/* <View style={{ marginTop: 10 }}>
                 <View
                   style={{
                     display: 'flex',
@@ -156,7 +157,7 @@ export default function PaymentPlane() {
                     VND 1.000.000
                   </Text>
                 </View>
-              </View>
+              </View> */}
             </View>
           </View>
         </View>

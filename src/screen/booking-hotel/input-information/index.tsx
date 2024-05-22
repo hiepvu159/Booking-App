@@ -6,7 +6,7 @@ import ArrowRightForItemIconSVG from '../../../../assets/svg/ArrowRightForItem';
 import UserIconSVG from '../../../../assets/svg/UserIconSVG';
 import { Button } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
-import CardDetailCar from '../card-detail-car';
+import CardDetailCar from '../card-detail-hotel';
 
 export default function InputInfomationHotel() {
   const { navigate } = useNavigation();

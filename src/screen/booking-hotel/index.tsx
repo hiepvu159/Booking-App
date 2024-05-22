@@ -8,14 +8,14 @@ import moment from 'moment';
 import { FORMAT_DATE } from '../booking-plane';
 import CalendarIconSVG from '../../../assets/svg/CalendarIconSVG';
 import ModalSelect from '../../components/modal-select/indext';
-import RoomIconSVG from '../../../assets/svg/RoomIconSVG';
+import { LIST_ADDRESS } from '../../constant/constant';
 
 export default function BookingHotelScreen() {
   const { navigate } = useNavigation();
   const [isOpen, setIsOpen] = useState(false);
+  const [valueAddress, setValueAddress] = useState('');
   const [data, setData] = useState();
   const [dateFrom, setDateFrom] = useState(moment().toDate());
-  const [dateTo, setDateTo] = useState(moment().add(1, 'day').toDate());
   const [isOpenModalDate, setIsOpenModalDate] = useState({
     dateFrom: false,
     dateTo: false,
@@ -36,12 +36,6 @@ export default function BookingHotelScreen() {
     }));
   }, []);
 
-  const handleCloseModalDateTo = useCallback(() => {
-    setIsOpenModalDate((prev) => ({
-      ...prev,
-      dateTo: false,
-    }));
-  }, []);
   return (
     <View style={styles.wrapHeader}>
       <ScrollView>
@@ -52,6 +46,7 @@ export default function BookingHotelScreen() {
             placeholder="Vui lòng chọn địa điểm"
             onTouchStart={() => handleFocus('from')}
             showSoftInputOnFocus={false}
+            value={valueAddress}
           />
 
           <DatePicker
@@ -83,7 +78,7 @@ export default function BookingHotelScreen() {
             showSoftInputOnFocus={false}
           />
 
-          <DatePicker
+          {/* <DatePicker
             modal
             mode="date"
             locale="vie"
@@ -110,14 +105,14 @@ export default function BookingHotelScreen() {
               }))
             }
             showSoftInputOnFocus={false}
-          />
-          <Input
+          /> */}
+          {/* <Input
             label="Loại phòng"
             leftIcon={<RoomIconSVG />}
             placeholder="Vui lòng chọn loại phòng"
             onTouchStart={() => handleFocus('from')}
             showSoftInputOnFocus={false}
-          />
+          /> */}
           <Button
             title={'Tìm kiếm'}
             buttonStyle={styles.btnSearch}
@@ -128,8 +123,10 @@ export default function BookingHotelScreen() {
       <ModalSelect
         isOpen={isOpen}
         onClose={onClose}
-        onSubmit={() => {}}
-        data={data}
+        onSubmit={(value) => {
+          setValueAddress(value);
+        }}
+        data={LIST_ADDRESS}
       />
     </View>
   );

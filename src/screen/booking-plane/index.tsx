@@ -10,6 +10,7 @@ import ModalSelect from '../../components/modal-select/indext';
 import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
 import { useNavigation } from '@react-navigation/native';
+import { LIST_ADDRESS } from '../../constant/constant';
 
 export const FORMAT_DATE = 'DD-MM-YYYY';
 
@@ -18,7 +19,7 @@ export default function BookingPlane() {
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState();
   const [dateFrom, setDateFrom] = useState(new Date());
-  const [dateTo, setDateTo] = useState(new Date());
+  const [valueAddress, setValueAddress] = useState('');
   const [isOpenModalDate, setIsOpenModalDate] = useState({
     dateFrom: false,
     dateTo: false,
@@ -39,31 +40,32 @@ export default function BookingPlane() {
     }));
   }, []);
 
-  const handleCloseModalDateTo = useCallback(() => {
-    setIsOpenModalDate((prev) => ({
-      ...prev,
-      dateTo: false,
-    }));
-  }, []);
+  // const handleCloseModalDateTo = useCallback(() => {
+  //   setIsOpenModalDate((prev) => ({
+  //     ...prev,
+  //     dateTo: false,
+  //   }));
+  // }, []);
 
   return (
     <View style={styles.wrapHeader}>
       <ScrollView>
         <Card containerStyle={styles.card}>
           <Input
-            label="Từ"
+            label="Điểm xuất phát"
             leftIcon={<PlaneUpIconSVG />}
             placeholder="Vui lòng chọn sân bay đi"
             onTouchStart={() => handleFocus('from')}
             showSoftInputOnFocus={false}
+            value={valueAddress}
           />
-          <Input
+          {/* <Input
             label="Đến"
             leftIcon={<PlanDownIconSVG />}
             onTouchStart={() => handleFocus('to')}
             showSoftInputOnFocus={false}
             placeholder="Vui lòng chọn sân bay đến"
-          />
+          /> */}
           <DatePicker
             modal
             mode="date"
@@ -93,7 +95,7 @@ export default function BookingPlane() {
             showSoftInputOnFocus={false}
           />
 
-          <DatePicker
+          {/* <DatePicker
             modal
             mode="date"
             locale="vie"
@@ -120,7 +122,7 @@ export default function BookingPlane() {
               }))
             }
             showSoftInputOnFocus={false}
-          />
+          /> */}
 
           <View style={styles.wrapInput}>
             <Input
@@ -144,8 +146,10 @@ export default function BookingPlane() {
       <ModalSelect
         isOpen={isOpen}
         onClose={onClose}
-        onSubmit={() => {}}
-        data={data}
+        onSubmit={(value) => {
+          setValueAddress(value);
+        }}
+        data={LIST_ADDRESS}
       />
     </View>
   );

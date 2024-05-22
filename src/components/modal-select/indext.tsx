@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
-import { Button, SearchBar } from '@rneui/themed';
+import { Button, Divider, SearchBar } from '@rneui/themed';
 import React from 'react';
 import {
   KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
+  Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import Modal from 'react-native-modal';
@@ -16,8 +18,8 @@ import ClearIconSVG from '../../../assets/svg/ClearIconSVG';
 interface ModalSelectProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: () => void;
-  data: any;
+  onSubmit: (value) => void;
+  data: any[];
 }
 
 export default function ModalSelect(props: ModalSelectProps) {
@@ -50,6 +52,19 @@ export default function ModalSelect(props: ModalSelectProps) {
                 type="clear"
                 titleStyle={{ color: '#fff' }}
               />
+            </View>
+            <View>
+              {data?.map((item, index) => (
+                <TouchableOpacity
+                  onPress={() => {
+                    onSubmit(item);
+                    onClose();
+                  }}
+                  key={index}>
+                  <Text style={styles.textOption}>{item}</Text>
+                  <Divider />
+                </TouchableOpacity>
+              ))}
             </View>
           </View>
         </ScrollView>
@@ -96,5 +111,11 @@ const styles = StyleSheet.create({
   inputStyle: { fontSize: 13 },
   inputContainerStyle: {
     height: 30,
+  },
+  textOption: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#000',
+    padding: 10,
   },
 });
