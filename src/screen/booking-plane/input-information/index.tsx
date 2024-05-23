@@ -1,6 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import CardDetailPlane from '../../../components/card-detail-plane';
 import EmailIconSVG from '../../../../assets/svg/EmailIconSVG';
 import ArrowRightForItemIconSVG from '../../../../assets/svg/ArrowRightForItem';
@@ -8,7 +14,7 @@ import UserIconSVG from '../../../../assets/svg/UserIconSVG';
 import SeatAirPlaneIconSVG from '../../../../assets/svg/SeatAirPlaneIconSVG';
 import BagIconSVG from '../../../../assets/svg/BagIconSVG';
 import { Button } from '@rneui/themed';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 const airPlaneOptionals = [
   {
@@ -36,9 +42,20 @@ const airPlaneOptionals = [
   },
 ];
 export default function InputInfomation() {
+  const { params } = useRoute();
   const { navigate } = useNavigation();
   return (
-    <ScrollView style={{ height: '100%', backgroundColor: '#E8EBEE' }}>
+    // <ScrollView
+    //   style={{
+    //     backgroundColor: '#E8EBEE',
+    //   }}>
+    <View
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'column',
+        height: '100%',
+      }}>
       <View>
         <View style={styles.wrap}>
           <View style={{ padding: 20 }}>
@@ -60,156 +77,84 @@ export default function InputInfomation() {
                 đến phương thức liên hệ của bạn
               </Text>
             </View>
-            <View
-              style={[
-                styles.card,
-                {
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                },
-              ]}
-              onTouchStart={() => navigate('InfoContactPlane' as never)}>
+            <TouchableOpacity
+              onPress={() => navigate('InfoContactPlane' as never)}>
               <View
                 style={[
+                  styles.card,
                   {
                     display: 'flex',
                     flexDirection: 'row',
                     alignItems: 'center',
+                    justifyContent: 'space-between',
                   },
                 ]}>
-                <EmailIconSVG color="#707173" />
-                <Text
+                <View
                   style={[
-                    styles.fontSize14,
-                    { fontWeight: '600', marginLeft: 10 },
+                    {
+                      display: 'flex',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    },
                   ]}>
-                  Điền thông tin liên hệ <Text style={{ color: 'red' }}>*</Text>
-                </Text>
+                  <EmailIconSVG color="#707173" />
+                  <Text
+                    style={[
+                      styles.fontSize14,
+                      { fontWeight: '600', marginLeft: 10 },
+                    ]}>
+                    Điền thông tin liên hệ{' '}
+                    <Text style={{ color: 'red' }}>*</Text>
+                  </Text>
+                </View>
+                <ArrowRightForItemIconSVG color="#2571E8" />
               </View>
-              <ArrowRightForItemIconSVG color="#2571E8" />
-            </View>
+            </TouchableOpacity>
           </View>
           <View style={{ marginBottom: 20 }}>
             <View style={{ paddingHorizontal: 10 }}>
               <Text style={styles.header}>Thông tin khách hàng</Text>
             </View>
-            <View
-              style={[
-                styles.card,
-                {
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                },
-              ]}
-              onTouchStart={() => navigate('InfoCustomer' as never)}>
+            <TouchableOpacity onPress={() => navigate('InfoCustomer' as never)}>
               <View
                 style={[
+                  styles.card,
                   {
                     display: 'flex',
                     flexDirection: 'row',
                     alignItems: 'center',
+                    justifyContent: 'space-between',
                   },
                 ]}>
-                <UserIconSVG color="#707173" />
-                <Text
-                  style={[
-                    styles.fontSize14,
-                    { fontWeight: '600', marginLeft: 10 },
-                  ]}>
-                  Người lớn 1 <Text style={{ color: 'red' }}>*</Text>
-                </Text>
-              </View>
-              <ArrowRightForItemIconSVG color="#2571E8" />
-            </View>
-          </View>
-
-          {/* tien nghi chuyen bay */}
-          <View style={{ marginBottom: 20 }}>
-            <View style={{ paddingHorizontal: 10 }}>
-              <Text style={styles.header}>Tiện nghi chuyến bay</Text>
-            </View>
-            <View>
-              {airPlaneOptionals.map((item) => (
                 <View
-                  style={[styles.card, { marginVertical: 5 }]}
-                  key={item.id}>
-                  <View
+                  style={[
+                    {
+                      display: 'flex',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    },
+                  ]}>
+                  <UserIconSVG color="#707173" />
+                  <Text
                     style={[
-                      {
-                        display: 'flex',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                      },
+                      styles.fontSize14,
+                      { fontWeight: '600', marginLeft: 10 },
                     ]}>
-                    <View
-                      style={[
-                        {
-                          display: 'flex',
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                        },
-                      ]}>
-                      {item.icon}
-                      <Text
-                        style={[
-                          styles.fontSize14,
-                          { fontWeight: '600', marginLeft: 10, color: '#000' },
-                        ]}>
-                        {item.title}
-                      </Text>
-                    </View>
-                    <ArrowRightForItemIconSVG color="#2571E8" />
-                  </View>
-                  <View
-                    style={[
-                      {
-                        display: 'flex',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        marginTop: 10,
-                      },
-                    ]}>
-                    <View
-                      style={[
-                        {
-                          display: 'flex',
-                          alignContent: 'center',
-                          alignItems: 'center',
-                          flexDirection: 'row',
-                        },
-                      ]}>
-                      <Text style={[{ maxWidth: 280, lineHeight: 18 }]}>
-                        {item.description}
-                      </Text>
-                    </View>
-                    <View
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'flex-end',
-                        flexDirection: 'column',
-                        alignItems: 'flex-end',
-                      }}>
-                      <Text>Bắt đầu từ</Text>
-                      <Text style={styles.price}>VND {item.price}</Text>
-                    </View>
-                  </View>
+                    Người lớn 1 <Text style={{ color: 'red' }}>*</Text>
+                  </Text>
                 </View>
-              ))}
-            </View>
+                <ArrowRightForItemIconSVG color="#2571E8" />
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
       <Button
         title={'Tiếp tục'}
-        onPress={() => navigate('PaymentPlane' as never)}
+        onPress={() => navigate('PaymentPlane' as never, params)}
       />
-    </ScrollView>
+    </View>
+    // </ScrollView>
   );
 }
 

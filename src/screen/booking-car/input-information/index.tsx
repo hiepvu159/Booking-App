@@ -5,10 +5,11 @@ import EmailIconSVG from '../../../../assets/svg/EmailIconSVG';
 import ArrowRightForItemIconSVG from '../../../../assets/svg/ArrowRightForItem';
 import UserIconSVG from '../../../../assets/svg/UserIconSVG';
 import { Button } from '@rneui/themed';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import CardDetailCar from '../card-detail-car';
 
 export default function InputInfomationCar() {
+  const { params } = useRoute();
   const { navigate } = useNavigation();
   return (
     <View
@@ -115,7 +116,7 @@ export default function InputInfomationCar() {
       </View>
       <Button
         title={'Tiếp tục'}
-        onPress={() => navigate('PaymentCar' as never)}
+        onPress={() => navigate('PaymentCar' as never, params)}
       />
     </View>
   );

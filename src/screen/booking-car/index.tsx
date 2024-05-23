@@ -14,21 +14,31 @@ import { RootStackParamList } from '../../navigations/Navigation';
 
 export default function BookingCarScreen() {
   const { navigate } = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState({
+    from: false,
+    to: false,
+  });
   const [valueAddress, setValueAddress] = useState('');
-  const [data, setData] = useState();
   const [dateFrom, setDateFrom] = useState(new Date());
   const [isOpenModalDate, setIsOpenModalDate] = useState({
     dateFrom: false,
     dateTo: false,
   });
+  const [valueAddressFrom, setValueAddressFrom] = useState('');
+  const [numberCustomer, setNumberCustomer] = useState(1);
+  const [valueAddressTo, setValueAddressTo] = useState('');
   const onClose = useCallback(() => {
-    setIsOpen(false);
+    setIsOpen({
+      from: false,
+      to: false,
+    });
   }, []);
 
   const handleFocus = useCallback((value) => {
-    setIsOpen(true);
-    setData(value);
+    setIsOpen((prev) => ({
+      ...prev,
+      [value]: true,
+    }));
   }, []);
 
   const handleCloseModalDateFrom = useCallback(() => {
@@ -37,6 +47,16 @@ export default function BookingCarScreen() {
       dateFrom: false,
     }));
   }, []);
+
+  const handleSubmit = useCallback(
+    (value) => {
+      if (isOpen.from) {
+        return setValueAddressFrom(value);
+      }
+      return setValueAddressTo(value);
+    },
+    [isOpen],
+  );
 
   return (
     <View style={styles.wrapHeader}>
@@ -48,9 +68,16 @@ export default function BookingCarScreen() {
             placeholder="Vui lòng chọn điểm đi"
             onTouchStart={() => handleFocus('from')}
             showSoftInputOnFocus={false}
-            value={valueAddress}
+            value={valueAddressFrom}
           />
-
+          <Input
+            label="Đến"
+            leftIcon={<CarIconSVG />}
+            onTouchStart={() => handleFocus('to')}
+            showSoftInputOnFocus={false}
+            placeholder="Vui lòng chọn điểm đến"
+            value={valueAddressTo}
+          />
           <DatePicker
             modal
             mode="date"
@@ -80,24 +107,30 @@ export default function BookingCarScreen() {
             showSoftInputOnFocus={false}
           />
 
-          <Input label="Số ghế" keyboardType="decimal-pad" defaultValue="1" />
+          <Input
+            label="Số ghế"
+            keyboardType="decimal-pad"
+            defaultValue="1"
+            onChangeText={(e) => setNumberCustomer(Number(e))}
+          />
           <Button
             title={'Tìm kiếm'}
             buttonStyle={styles.btnSearch}
             onPress={() =>
               navigate('ListCar', {
-                data: 'heelo',
+                addressFrom: valueAddressFrom,
+                addressTo: valueAddressTo,
+                dateFrom: moment(dateFrom).format(FORMAT_DATE).toString(),
+                numberCustomer: numberCustomer,
               })
             }
           />
         </Card>
       </ScrollView>
       <ModalSelect
-        isOpen={isOpen}
+        isOpen={isOpen.from || isOpen.to}
         onClose={onClose}
-        onSubmit={(value) => {
-          setValueAddress(value);
-        }}
+        onSubmit={handleSubmit}
         data={LIST_ADDRESS}
       />
     </View>

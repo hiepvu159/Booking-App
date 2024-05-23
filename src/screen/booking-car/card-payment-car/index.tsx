@@ -2,25 +2,35 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import ArrowRightIconSVG from '../../../../assets/svg/ArrowRightIconSVG';
+import { useRoute } from '@react-navigation/native';
 
 export default function CardPaymentCar() {
+  const { params }: any = useRoute();
+
   return (
     <View style={styles.container}>
       <View style={{ display: 'flex', flexDirection: 'row' }}>
         <Text style={[styles.textInfo, styles.header, { marginTop: 10 }]}>
-          HANOI
+          {params?.addressFrom}
         </Text>
         <View style={{ marginTop: 10, marginHorizontal: 5 }}>
           <ArrowRightIconSVG height="20" width="20" color="#fff" />
         </View>
         <Text style={[styles.textInfo, styles.header, { marginTop: 10 }]}>
-          HAIPHONG
+          {params?.addressTo}
         </Text>
       </View>
-      <Text style={[styles.textInfo, { marginTop: 5 }]}>CN, 28 thg 4 2024</Text>
+      <Text style={[styles.textInfo, { marginTop: 5 }]}>
+        {params?.dateFrom}
+      </Text>
 
+      <Text style={[styles.textInfo, { marginTop: 5 }]}>
+        {params?.timeStart} - {params?.timeEnd}
+      </Text>
       <View style={{ marginTop: 5, alignItems: 'center' }}>
-        <Text style={[styles.textInfo, { fontWeight: '500' }]}>1 Ghế</Text>
+        <Text style={[styles.textInfo, { fontWeight: '500' }]}>
+          {params?.numberCustomer} Ghế
+        </Text>
       </View>
     </View>
   );

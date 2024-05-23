@@ -3,11 +3,13 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import ArrowRightForItemIconSVG from '../../../../assets/svg/ArrowRightForItem';
 import WalletIconSVG from '../../../../assets/svg/WalletIconSVG';
-import { Button, Divider } from '@rneui/themed';
-import { useNavigation } from '@react-navigation/native';
+import { Button } from '@rneui/themed';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import CardPaymentCar from '../card-payment-car';
 
 export default function PaymentCar() {
+  const { params }: any = useRoute();
+  console.log('🚀 ~ PaymentCar ~ params:', params);
   const { navigate } = useNavigation();
   return (
     <View
@@ -46,7 +48,8 @@ export default function PaymentCar() {
                   styles.fontSize14,
                   { fontWeight: '600', marginLeft: 10 },
                 ]}>
-                Phương thức thanh toán <Text style={{ color: 'red' }}>*</Text>
+                Phương thức thanh toán: Visa{' '}
+                <Text style={{ color: 'red' }}>*</Text>
               </Text>
             </View>
             <ArrowRightForItemIconSVG color="#2571E8" />
@@ -84,78 +87,8 @@ export default function PaymentCar() {
                       fontSize: 16,
                     },
                   ]}>
-                  VND 5.164.200
+                  VND {params?.price}
                 </Text>
-              </View>
-              <Divider />
-              <View style={{ marginTop: 10 }}>
-                <View
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    flexDirection: 'row',
-                  }}>
-                  <Text
-                    style={[
-                      styles.fontSize14,
-                      { fontWeight: '600', marginLeft: 10, marginVertical: 5 },
-                    ]}>
-                    Bảo hiểm nhân thọ
-                  </Text>
-                  <Text
-                    style={[
-                      styles.fontSize14,
-                      { fontWeight: '600', marginLeft: 10, marginVertical: 5 },
-                    ]}>
-                    VND 1.000.000
-                  </Text>
-                </View>
-              </View>
-              <View style={{ marginTop: 10 }}>
-                <View
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    flexDirection: 'row',
-                  }}>
-                  <Text
-                    style={[
-                      styles.fontSize14,
-                      { fontWeight: '600', marginLeft: 10, marginVertical: 5 },
-                    ]}>
-                    Bảo hiểm nhân thọ
-                  </Text>
-                  <Text
-                    style={[
-                      styles.fontSize14,
-                      { fontWeight: '600', marginLeft: 10, marginVertical: 5 },
-                    ]}>
-                    VND 1.000.000
-                  </Text>
-                </View>
-              </View>
-              <View style={{ marginTop: 10 }}>
-                <View
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    flexDirection: 'row',
-                  }}>
-                  <Text
-                    style={[
-                      styles.fontSize14,
-                      { fontWeight: '600', marginLeft: 10, marginVertical: 5 },
-                    ]}>
-                    Bảo hiểm nhân thọ
-                  </Text>
-                  <Text
-                    style={[
-                      styles.fontSize14,
-                      { fontWeight: '600', marginLeft: 10, marginVertical: 5 },
-                    ]}>
-                    VND 1.000.000
-                  </Text>
-                </View>
               </View>
             </View>
           </View>

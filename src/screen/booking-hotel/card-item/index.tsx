@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useCallback } from 'react';
 import {
   Dimensions,
@@ -13,6 +13,8 @@ import DashedLine from 'react-native-dashed-line';
 import { SliderBox } from 'react-native-image-slider-box';
 
 export default function CardItemHotel() {
+  const { params } = useRoute();
+
   const { navigate } = useNavigation();
   const images: string[] = [
     'https://dyf.vn/wp-content/uploads/2021/11/thiet-ke-noi-that-phong-khach-san-hien-dai.jpg', // Local image
@@ -21,8 +23,13 @@ export default function CardItemHotel() {
   ];
 
   const onClick = useCallback(() => {
-    navigate('DetailHotel' as never);
-  }, [navigate]);
+    navigate('DetailHotel' as never, {
+      ...params,
+      nameHotel: 'Zalo Sea Hotel',
+      price: '1.000.000',
+      addressHotel: 'Phước Mỹ, Đà Nẵng',
+    });
+  }, [navigate, params]);
 
   return (
     <TouchableOpacity onPress={onClick}>
@@ -61,7 +68,7 @@ export default function CardItemHotel() {
           />
         </View>
         <View style={styles.priceWrap}>
-          <Text style={styles.priceText}>VND 5.000.000</Text>
+          <Text style={styles.priceText}>VND 1.000.000</Text>
           <Text>/phòng/đêm</Text>
         </View>
       </View>

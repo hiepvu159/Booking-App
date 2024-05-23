@@ -2,25 +2,27 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import ArrowRightIconSVG from '../../../../assets/svg/ArrowRightIconSVG';
+import { useRoute } from '@react-navigation/native';
 
 export default function CardPaymentHotel() {
+  const { params }: any = useRoute();
   return (
     <View style={styles.container}>
       <View style={{ display: 'flex', flexDirection: 'row' }}>
         <Text style={[styles.textInfo, styles.header, { marginTop: 10 }]}>
-          HANOI
-        </Text>
-        <View style={{ marginTop: 10, marginHorizontal: 5 }}>
-          <ArrowRightIconSVG height="20" width="20" color="#fff" />
-        </View>
-        <Text style={[styles.textInfo, styles.header, { marginTop: 10 }]}>
-          HAIPHONG
+          {params?.nameHotel}
         </Text>
       </View>
-      <Text style={[styles.textInfo, { marginTop: 5 }]}>CN, 28 thg 4 2024</Text>
+      <Text style={[styles.textInfo, { marginTop: 5 }]}>
+        {params?.addressHotel}
+      </Text>
+
+      <Text style={[styles.textInfo, { marginTop: 5 }]}>{params?.date}</Text>
 
       <View style={{ marginTop: 5, alignItems: 'center' }}>
-        <Text style={[styles.textInfo, { fontWeight: '500' }]}>1 Ghế</Text>
+        <Text style={[styles.textInfo, { fontWeight: '500' }]}>
+          {params?.typeRoom}
+        </Text>
       </View>
     </View>
   );

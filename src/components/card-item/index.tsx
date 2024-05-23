@@ -1,33 +1,23 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-// import StepIndicator from 'react-native-step-indicator';
-// import { StepIndicatorStyles } from 'react-native-step-indicator/lib/typescript/src/types';
-
-// const customStyles: StepIndicatorStyles = {
-//   stepIndicatorSize: 20,
-//   currentStepIndicatorSize: 20,
-//   separatorStrokeWidth: 1,
-//   stepIndicatorLabelFontSize: 0,
-//   stepStrokeWidth: 0,
-//   currentStepStrokeWidth: 0,
-//   currentStepIndicatorLabelFontSize: 0,
-//   stepIndicatorCurrentColor: '#6a6b6a',
-//   stepIndicatorUnFinishedColor: '#6a6b6a',
-//   stepIndicatorFinishedColor: '#6a6b6a',
-//   stepStrokeCurrentColor: '#6a6b6a',
-//   stepStrokeFinishedColor: '#6a6b6a',
-//   stepStrokeUnFinishedColor: '#6a6b6a',
-//   separatorFinishedColor: '#6a6b6a',
-//   separatorUnFinishedColor: '#6a6b6a',
-// };
 
 export default function CardItem() {
   const { navigate } = useNavigation();
+  const { params } = useRoute();
+
   return (
     <View
       style={styles.container}
-      onTouchStart={() => navigate('InfoPlane' as never)}>
+      onTouchStart={() =>
+        navigate('InfoPlane' as never, {
+          ...params,
+          airPlaneName: 'VietNam Airline',
+          timeFrom: '08:00',
+          timeTo: '10:00',
+          price: '5.000.000',
+        })
+      }>
       <Text style={styles.textInfo}>VietNam Airline</Text>
       <View style={styles.wrapInfo}>
         <View>
@@ -35,7 +25,6 @@ export default function CardItem() {
             <Text style={styles.textInfo}>08:00</Text>
             <Text style={styles.textInfo}> - </Text>
             <Text style={styles.textInfo}>10:00 </Text>
-            <Text style={styles.textInfo}>• 1 điểm dừng</Text>
           </View>
         </View>
         <View style={styles.priceWrap}>

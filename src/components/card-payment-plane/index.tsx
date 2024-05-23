@@ -2,27 +2,38 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import ArrowRightIconSVG from '../../../assets/svg/ArrowRightIconSVG';
+import { useRoute } from '@react-navigation/native';
 
 export default function CardPaymentPlane() {
+  const { params }: any = useRoute();
+
   return (
     <View style={styles.container}>
       <View style={{ display: 'flex', flexDirection: 'row' }}>
         <Text style={[styles.textInfo, styles.header, { marginTop: 10 }]}>
-          HAN
+          {params?.addressFrom}
         </Text>
         <View style={{ marginTop: 10, marginHorizontal: 5 }}>
           <ArrowRightIconSVG height="20" width="20" color="#fff" />
         </View>
         <Text style={[styles.textInfo, styles.header, { marginTop: 10 }]}>
-          HND
+          {params?.addressTo}
         </Text>
       </View>
-      <Text style={[styles.textInfo, { marginTop: 5 }]}>CN, 28 thg 4 2024</Text>
-
-      <View style={{ marginTop: 5, alignItems: 'center' }}>
-        <Text style={[styles.textInfo, { fontWeight: '500' }]}>1 Tiện ích</Text>
-        <Text style={styles.textInfo}> Hành lý 2kg</Text>
-        <Text style={styles.textInfo}> Bảo hiểm nhân thọ</Text>
+      <View style={styles.wrapInfo}>
+        <View>
+          <View style={styles.wrapTime}>
+            <Text style={styles.textInfo}>{params?.timeFrom}</Text>
+            <Text style={styles.textInfo}> - </Text>
+            <Text style={styles.textInfo}>{params?.timeTo} </Text>
+            <Text style={[styles.textInfo]}>
+              {''} {params?.dateFrom}
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View style={{ marginTop: 5 }}>
+        <Text style={styles.textInfo}>{params?.typeSeat}</Text>
       </View>
     </View>
   );
@@ -48,6 +59,9 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
+    alignContent: 'center',
+    textAlign: 'center',
   },
   textInfo: {
     color: '#fff',

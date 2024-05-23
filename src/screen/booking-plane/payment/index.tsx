@@ -5,9 +5,11 @@ import CardPaymentPlane from '../../../components/card-payment-plane';
 import ArrowRightForItemIconSVG from '../../../../assets/svg/ArrowRightForItem';
 import WalletIconSVG from '../../../../assets/svg/WalletIconSVG';
 import { Button, Divider } from '@rneui/themed';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 export default function PaymentPlane() {
+  const { params }: any = useRoute();
+
   const { navigate } = useNavigation();
   return (
     <View
@@ -85,79 +87,10 @@ export default function PaymentPlane() {
                       fontSize: 16,
                     },
                   ]}>
-                  VND 5.164.200
+                  VND {params?.price}
                 </Text>
               </View>
               <Divider />
-              {/* <View style={{ marginTop: 10 }}>
-                <View
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    flexDirection: 'row',
-                  }}>
-                  <Text
-                    style={[
-                      styles.fontSize14,
-                      { fontWeight: '600', marginLeft: 10, marginVertical: 5 },
-                    ]}>
-                    Bảo hiểm nhân thọ
-                  </Text>
-                  <Text
-                    style={[
-                      styles.fontSize14,
-                      { fontWeight: '600', marginLeft: 10, marginVertical: 5 },
-                    ]}>
-                    VND 1.000.000
-                  </Text>
-                </View>
-              </View>
-              <View style={{ marginTop: 10 }}>
-                <View
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    flexDirection: 'row',
-                  }}>
-                  <Text
-                    style={[
-                      styles.fontSize14,
-                      { fontWeight: '600', marginLeft: 10, marginVertical: 5 },
-                    ]}>
-                    Bảo hiểm nhân thọ
-                  </Text>
-                  <Text
-                    style={[
-                      styles.fontSize14,
-                      { fontWeight: '600', marginLeft: 10, marginVertical: 5 },
-                    ]}>
-                    VND 1.000.000
-                  </Text>
-                </View>
-              </View>
-              <View style={{ marginTop: 10 }}>
-                <View
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    flexDirection: 'row',
-                  }}>
-                  <Text
-                    style={[
-                      styles.fontSize14,
-                      { fontWeight: '600', marginLeft: 10, marginVertical: 5 },
-                    ]}>
-                    Bảo hiểm nhân thọ
-                  </Text>
-                  <Text
-                    style={[
-                      styles.fontSize14,
-                      { fontWeight: '600', marginLeft: 10, marginVertical: 5 },
-                    ]}>
-                    VND 1.000.000
-                  </Text>
-                </View>
-              </View> */}
             </View>
           </View>
         </View>

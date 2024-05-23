@@ -1,7 +1,8 @@
+/* eslint-disable react-native/no-inline-styles */
 import { Card } from '@rneui/base';
 import { Button, Input } from '@rneui/themed';
 import React, { useCallback, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import PlaneUpIconSVG from '../../../assets/svg/PlaneUpIconSVG';
 import PlanDownIconSVG from '../../../assets/svg/PlanDownIconSVG';
@@ -11,26 +12,39 @@ import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
 import { useNavigation } from '@react-navigation/native';
 import { LIST_ADDRESS } from '../../constant/constant';
+import { Picker } from '@react-native-picker/picker';
+import { RootStackParamList } from '../../navigations/Navigation';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 export const FORMAT_DATE = 'DD-MM-YYYY';
 
 export default function BookingPlane() {
-  const { navigate } = useNavigation();
-  const [isOpen, setIsOpen] = useState(false);
-  const [data, setData] = useState();
+  const { navigate } = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const [isOpen, setIsOpen] = useState({
+    from: false,
+    to: false,
+  });
   const [dateFrom, setDateFrom] = useState(new Date());
-  const [valueAddress, setValueAddress] = useState('');
+  const [valueAddressFrom, setValueAddressFrom] = useState('');
+  const [valueAddressTo, setValueAddressTo] = useState('');
+  const [typeSeat, setTypeSeat] = useState('Thương gia');
+  const [numberCustomer, setNumberCustomer] = useState(1);
   const [isOpenModalDate, setIsOpenModalDate] = useState({
     dateFrom: false,
     dateTo: false,
   });
   const onClose = useCallback(() => {
-    setIsOpen(false);
+    setIsOpen({
+      from: false,
+      to: false,
+    });
   }, []);
 
   const handleFocus = useCallback((value) => {
-    setIsOpen(true);
-    setData(value);
+    setIsOpen((prev) => ({
+      ...prev,
+      [value]: true,
+    }));
   }, []);
 
   const handleCloseModalDateFrom = useCallback(() => {
@@ -40,12 +54,15 @@ export default function BookingPlane() {
     }));
   }, []);
 
-  // const handleCloseModalDateTo = useCallback(() => {
-  //   setIsOpenModalDate((prev) => ({
-  //     ...prev,
-  //     dateTo: false,
-  //   }));
-  // }, []);
+  const handleSubmit = useCallback(
+    (value) => {
+      if (isOpen.from) {
+        return setValueAddressFrom(value);
+      }
+      return setValueAddressTo(value);
+    },
+    [isOpen],
+  );
 
   return (
     <View style={styles.wrapHeader}>
@@ -57,15 +74,16 @@ export default function BookingPlane() {
             placeholder="Vui lòng chọn sân bay đi"
             onTouchStart={() => handleFocus('from')}
             showSoftInputOnFocus={false}
-            value={valueAddress}
+            value={valueAddressFrom}
           />
-          {/* <Input
+          <Input
             label="Đến"
             leftIcon={<PlanDownIconSVG />}
             onTouchStart={() => handleFocus('to')}
             showSoftInputOnFocus={false}
             placeholder="Vui lòng chọn sân bay đến"
-          /> */}
+            value={valueAddressTo}
+          />
           <DatePicker
             modal
             mode="date"
@@ -95,60 +113,45 @@ export default function BookingPlane() {
             showSoftInputOnFocus={false}
           />
 
-          {/* <DatePicker
-            modal
-            mode="date"
-            locale="vie"
-            open={isOpenModalDate.dateTo}
-            date={dateTo}
-            onCancel={handleCloseModalDateTo}
-            onConfirm={(e) => {
-              setDateTo(e);
-              handleCloseModalDateTo();
-            }}
-            title={'Ngày về'}
-            confirmText="Xác nhận"
-            cancelText="Quay lại"
-          />
-          <Input
-            value={moment(dateTo).format('DD-MM-YYYY').toString()}
-            label="Ngày về"
-            leftIcon={<CalendarIconSVG />}
-            placeholder="Vui lòng chọn ngày về"
-            onTouchStart={() =>
-              setIsOpenModalDate((prev) => ({
-                ...prev,
-                dateTo: true,
-              }))
-            }
-            showSoftInputOnFocus={false}
-          /> */}
-
           <View style={styles.wrapInput}>
             <Input
               label="Hành khách"
               keyboardType="decimal-pad"
               defaultValue="1"
+              containerStyle={{ width: '50%' }}
+              onChangeText={(e) => setNumberCustomer(Number(e))}
             />
-            <Input
-              label="Hạng ghế"
-              onTouchStart={() => handleFocus('from')}
-              showSoftInputOnFocus={false}
-            />
+            <View style={{ width: '50%' }}>
+              <Text style={{ fontSize: 16, fontWeight: '600' }}>Hạng Ghế</Text>
+              <Picker
+                selectedValue={typeSeat}
+                onValueChange={(itemValue) => {
+                  setTypeSeat(itemValue);
+                }}>
+                <Picker.Item label="Thương gia" value="Thương gia" />
+                <Picker.Item label="Bình dân" value="Bình dân" />
+              </Picker>
+            </View>
           </View>
           <Button
             title={'Tìm kiếm'}
             buttonStyle={styles.btnSearch}
-            onPress={() => navigate('ListPlane' as never)}
+            onPress={() => {
+              navigate('ListPlane', {
+                addressFrom: valueAddressFrom,
+                addressTo: valueAddressTo,
+                dateFrom: moment(dateFrom).format(FORMAT_DATE).toString(),
+                typeSeat: typeSeat,
+                numberCustomer: numberCustomer,
+              });
+            }}
           />
         </Card>
       </ScrollView>
       <ModalSelect
-        isOpen={isOpen}
+        isOpen={isOpen.from || isOpen.to}
         onClose={onClose}
-        onSubmit={(value) => {
-          setValueAddress(value);
-        }}
+        onSubmit={handleSubmit}
         data={LIST_ADDRESS}
       />
     </View>
@@ -164,7 +167,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   wrapInput: {
-    maxWidth: 175,
     display: 'flex',
     flexDirection: 'row',
   },

@@ -4,7 +4,7 @@ import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
 import LocationIconSVG from '../../../../assets/svg/LocationIconSVG';
 import { Button, Divider } from '@rneui/themed';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import ElevatorIconSVG from '../../../../assets/svg/ElevatorIconSVG';
 import AirConditionerIconSVG from '../../../../assets/svg/AirConditionerIconSVG';
 import ReceptionistIconSVG from '../../../../assets/svg/ReceptionistIconSVG';
@@ -13,6 +13,8 @@ import CutleryIconSVG from '../../../../assets/svg/CutleryIconSVG';
 import ParkingIconSVG from '../../../../assets/svg/ParkingIconSVG';
 
 export default function DetailHotel() {
+  const { params }: any = useRoute();
+
   const { navigate } = useNavigation();
   const images: string[] = [
     'https://dyf.vn/wp-content/uploads/2021/11/thiet-ke-noi-that-phong-khach-san-hien-dai.jpg', // Local image
@@ -37,7 +39,7 @@ export default function DetailHotel() {
         <View style={{ padding: 15 }}>
           <View style={{ marginBottom: 10 }}>
             <Text style={[styles.textInfo, { fontWeight: '600' }]}>
-              Zalo Sea Hotel
+              {params?.nameHotel}
             </Text>
             <View
               style={{
@@ -48,7 +50,7 @@ export default function DetailHotel() {
               }}>
               <LocationIconSVG />
               <Text style={[{ marginTop: 2, fontSize: 13 }]}>
-                Phước Mỹ, Đà Nẵng
+                {params?.addressHotel}
               </Text>
             </View>
           </View>
@@ -126,7 +128,7 @@ export default function DetailHotel() {
           <Divider />
           <View style={{ paddingVertical: 10 }}>
             <Text>Mô Tả</Text>
-            <Text>Khách sạn số 1 VN</Text>
+            <Text></Text>
           </View>
         </View>
       </View>
@@ -134,7 +136,7 @@ export default function DetailHotel() {
         title={'Chọn phòng'}
         size="lg"
         buttonStyle={{ backgroundColor: '#F4601F' }}
-        onPress={() => navigate('SelectRoom' as never)}
+        onPress={() => navigate('SelectRoom' as never, params)}
       />
     </View>
   );

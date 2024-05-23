@@ -78,45 +78,15 @@ export default function BookingHotelScreen() {
             showSoftInputOnFocus={false}
           />
 
-          {/* <DatePicker
-            modal
-            mode="date"
-            locale="vie"
-            open={isOpenModalDate.dateTo}
-            date={dateTo}
-            onCancel={handleCloseModalDateTo}
-            onConfirm={(e) => {
-              setDateTo(e);
-              handleCloseModalDateTo();
-            }}
-            title={'Ngày về'}
-            confirmText="Xác nhận"
-            cancelText="Quay lại"
-          />
-          <Input
-            value={moment(dateTo).format('DD-MM-YYYY').toString()}
-            label="Ngày về"
-            leftIcon={<CalendarIconSVG />}
-            placeholder="Vui lòng chọn ngày về"
-            onTouchStart={() =>
-              setIsOpenModalDate((prev) => ({
-                ...prev,
-                dateTo: true,
-              }))
-            }
-            showSoftInputOnFocus={false}
-          /> */}
-          {/* <Input
-            label="Loại phòng"
-            leftIcon={<RoomIconSVG />}
-            placeholder="Vui lòng chọn loại phòng"
-            onTouchStart={() => handleFocus('from')}
-            showSoftInputOnFocus={false}
-          /> */}
           <Button
             title={'Tìm kiếm'}
             buttonStyle={styles.btnSearch}
-            onPress={() => navigate('ListHotel' as never)}
+            onPress={() =>
+              navigate('ListHotel' as never, {
+                address: valueAddress,
+                date: moment(dateFrom).format(FORMAT_DATE).toString(),
+              })
+            }
           />
         </Card>
       </ScrollView>
