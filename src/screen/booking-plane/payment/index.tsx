@@ -1,16 +1,34 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, { useCallback } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import CardPaymentPlane from '../../../components/card-payment-plane';
 import ArrowRightForItemIconSVG from '../../../../assets/svg/ArrowRightForItem';
 import WalletIconSVG from '../../../../assets/svg/WalletIconSVG';
 import { Button, Divider } from '@rneui/themed';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../../navigations/Navigation';
+import { paymentTicketPlane } from '../../../api/booking-plane.api';
 
 export default function PaymentPlane() {
-  const { params }: any = useRoute();
+  const { params } = useRoute<RouteProp<RootStackParamList, 'PaymentPlane'>>();
+  const { navigate } = useNavigation<StackNavigationProp<RootStackParamList>>();
 
-  const { navigate } = useNavigation();
+  const handlePayment = useCallback(() => {
+    paymentTicketPlane({
+      contact_with_name: `${params.userContact.firstName} ${params.userContact.lastName}`,
+      user_id: 123124,
+      flight_id: params.data.id,
+      contact_with_phone: params.userContact.phoneNumber,
+      seat_basic_number: params.seatBasicCount,
+      seat_vip_number: params.seatVipCount,
+    })
+      .then(() => {
+        console.log('success');
+      })
+      .catch((err) => console.log(err));
+  }, [params]);
+
   return (
     <View
       style={{
@@ -60,16 +78,7 @@ export default function PaymentPlane() {
         <View style={{ marginVertical: 10 }}>
           <View>
             <View style={[styles.card]}>
-              <View
-                style={[
-                  {
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    marginBottom: 10,
-                  },
-                ]}>
+              <View style={styles.formatPrice}>
                 <Text
                   style={[
                     styles.fontSize14,
@@ -87,17 +96,67 @@ export default function PaymentPlane() {
                       fontSize: 16,
                     },
                   ]}>
-                  VND {params?.price}
+                  VND{' '}
+                  {(
+                    params.seatVipCount * params.data.seat_vip_value +
+                    params.seatBasicCount * params.data.seat_basic_value
+                  ).toLocaleString('en-us')}
                 </Text>
               </View>
               <Divider />
+
+              <View style={[styles.formatPrice, { marginTop: 10 }]}>
+                <Text
+                  style={[
+                    styles.fontSize14,
+                    { fontWeight: '600', marginLeft: 10 },
+                  ]}>
+                  Giá vé VIP:
+                </Text>
+                <Text
+                  style={[
+                    styles.fontSize14,
+                    {
+                      fontWeight: '600',
+                      marginLeft: 10,
+                      color: '#000',
+                      fontSize: 16,
+                    },
+                  ]}>
+                  VND{' '}
+                  {(
+                    params.seatVipCount * params.data.seat_vip_value
+                  ).toLocaleString('en-us')}
+                </Text>
+              </View>
+              <View style={styles.formatPrice}>
+                <Text
+                  style={[
+                    styles.fontSize14,
+                    { fontWeight: '600', marginLeft: 10 },
+                  ]}>
+                  Giá vé thường:
+                </Text>
+                <Text
+                  style={[
+                    styles.fontSize14,
+                    {
+                      fontWeight: '600',
+                      marginLeft: 10,
+                      color: '#000',
+                      fontSize: 16,
+                    },
+                  ]}>
+                  VND{' '}
+                  {(
+                    params.seatBasicCount * params.data.seat_basic_value
+                  ).toLocaleString('en-us')}
+                </Text>
+              </View>
             </View>
           </View>
         </View>
-        <Button
-          title={'Thanh Toán'}
-          onPress={() => navigate('BottomTabs' as never)}
-        />
+        <Button title={'Thanh Toán'} onPress={handlePayment} />
       </View>
     </View>
   );
@@ -125,5 +184,12 @@ const styles = StyleSheet.create({
   },
   price: {
     color: '#F4601F',
+  },
+  formatPrice: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 10,
   },
 });

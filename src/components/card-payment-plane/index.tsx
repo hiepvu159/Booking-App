@@ -2,38 +2,47 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import ArrowRightIconSVG from '../../../assets/svg/ArrowRightIconSVG';
-import { useRoute } from '@react-navigation/native';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { RootStackParamList } from '../../navigations/Navigation';
+import { FORMAT_DATE } from '../../screen/booking-plane';
+import moment from 'moment';
 
 export default function CardPaymentPlane() {
-  const { params }: any = useRoute();
+  const { params } = useRoute<RouteProp<RootStackParamList, 'PaymentPlane'>>();
 
   return (
     <View style={styles.container}>
+      <Text style={styles.textInfo}>
+        {moment(params?.data.start_time).format(FORMAT_DATE)}
+      </Text>
       <View style={{ display: 'flex', flexDirection: 'row' }}>
-        <Text style={[styles.textInfo, styles.header, { marginTop: 10 }]}>
-          {params?.addressFrom}
+        <Text style={[styles.textInfo, styles.header, { marginTop: 5 }]}>
+          {params.data.start_location}
         </Text>
-        <View style={{ marginTop: 10, marginHorizontal: 5 }}>
+        <View style={{ marginTop: 6, marginHorizontal: 5 }}>
           <ArrowRightIconSVG height="20" width="20" color="#fff" />
         </View>
-        <Text style={[styles.textInfo, styles.header, { marginTop: 10 }]}>
-          {params?.addressTo}
+        <Text style={[styles.textInfo, styles.header, { marginTop: 5 }]}>
+          {params?.data.end_location}
         </Text>
       </View>
-      <View style={styles.wrapInfo}>
-        <View>
-          <View style={styles.wrapTime}>
-            <Text style={styles.textInfo}>{params?.timeFrom}</Text>
-            <Text style={styles.textInfo}> - </Text>
-            <Text style={styles.textInfo}>{params?.timeTo} </Text>
-            <Text style={[styles.textInfo]}>
-              {''} {params?.dateFrom}
-            </Text>
-          </View>
-        </View>
-      </View>
       <View style={{ marginTop: 5 }}>
-        <Text style={styles.textInfo}>{params?.typeSeat}</Text>
+        <Text style={[styles.textInfo, styles.textAlign]}>
+          Thời gian khởi hành : {moment(params.data.start_time).format('HH:mm')}
+        </Text>
+        <Text style={[styles.textInfo, styles.textAlign]}>
+          Thời gian di chuyển dự kiến : {params.data.estimate_time}{' '}
+          {params.data.estimate_unit}
+        </Text>
+      </View>
+      <View>
+        <Text style={styles.textInfo}>Số lượng vé:</Text>
+        <Text style={[styles.textInfo, styles.textAlign]}>
+          {params.seatBasicCount} Vé thường
+        </Text>
+        <Text style={[styles.textInfo, styles.textAlign]}>
+          {params.seatVipCount} Vé VIP
+        </Text>
       </View>
     </View>
   );
@@ -79,5 +88,8 @@ const styles = StyleSheet.create({
   priceWrap: {
     display: 'flex',
     flexDirection: 'row',
+  },
+  textAlign: {
+    textAlign: 'center',
   },
 });

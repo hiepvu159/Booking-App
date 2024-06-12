@@ -5,27 +5,27 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Button, Input } from '@rneui/themed';
-import { LoginParams, loginAPI } from '../../api/user.api';
+import { LoginParams, registerAPI } from '../../api/user.api';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../navigations/Navigation';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 const defaultValues = {
   username: '',
   password: '',
+  confirmPassword: '',
 };
 
-export default function LoginScreen() {
+export default function RegisterScreen() {
   const { navigate } = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const schema = yup.object().shape({
     username: yup
       .string()
-      .trim()
       .matches(
-        /^[A-Za-z]{8,20}$/,
+        /^[A-Za-z0-9]{8,20}$/,
         'Tên người dùng chỉ sử dụng chữ, độ dài từ 8 đến 20 kí tự',
       )
+      .trim()
       .nullable()
       .required('Vui lòng nhập đầy đủ thông tin'),
     password: yup
@@ -37,7 +37,18 @@ export default function LoginScreen() {
       .trim()
       .nullable()
       .required('Vui lòng nhập đầy đủ thông tin'),
+    confirmPassword: yup
+      .string()
+      .trim()
+      .matches(
+        /^[a-zA-Z0-9\d]{8,20}$/,
+        'Mật khẩu dài ít nhất 8 kí tự, tối đa 20 kí tự, chỉ bao gồm chữ và số ',
+      )
+      .nullable()
+      .required('Vui lòng nhập đầy đủ thông tin')
+      .oneOf([yup.ref('password')], 'Mật khẩu không trùng khớp'),
   });
+
   const { control, handleSubmit } = useForm({
     mode: 'onChange',
     defaultValues: defaultValues,
@@ -45,13 +56,12 @@ export default function LoginScreen() {
   });
 
   const onSubmit = useCallback(
-    async (value: LoginParams) => {
-      loginAPI({
+    (value: LoginParams) => {
+      registerAPI({
         username: value.username,
         password: value.password,
-      }).then(async (res) => {
-        await AsyncStorage.setItem('token', res.data.access_token);
-        navigate('BottomTabs');
+      }).then(() => {
+        navigate('login');
       });
       // .catch((err) => {});
     },
@@ -113,6 +123,26 @@ export default function LoginScreen() {
               />
             )}
           />
+          <Controller
+            name="confirmPassword"
+            control={control}
+            render={({ fieldState, field }) => (
+              <Input
+                secureTextEntry={true}
+                placeholder="Xác nhận mật khẩu"
+                inputStyle={styles.inputStyle}
+                errorMessage={fieldState?.error?.message}
+                errorStyle={{
+                  color: !fieldState?.error?.message ? '#9BA5AE' : 'red',
+                }}
+                onChange={(e) => {
+                  field.onChange(e.nativeEvent.text);
+                }}
+                value={field.value}
+                containerStyle={{ width: '70%' }}
+              />
+            )}
+          />
           <Button
             title={'Lưu'}
             color={'#F4601F'}
@@ -129,9 +159,9 @@ export default function LoginScreen() {
             marginTop: 10,
             justifyContent: 'center',
           }}>
-          <Text>Nếu chưa có tài khoản. Vui lòng chọn </Text>
-          <TouchableOpacity onPress={() => navigate('Register')}>
-            <Text style={{ color: '#5B9EDE' }}>Đăng ký</Text>
+          <Text>Quay lại</Text>
+          <TouchableOpacity onPress={() => navigate('login')}>
+            <Text style={{ color: '#5B9EDE' }}> Đăng nhập</Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -1,38 +1,69 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { RootStackParamList } from '../../navigations/Navigation';
+import { PlaneModel } from '../../model/plane.model';
+import { FORMAT_DATE } from '../../screen/booking-plane';
+import moment from 'moment';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default function CardItem() {
-  const { navigate } = useNavigation();
-  const { params } = useRoute();
+interface Props {
+  data: PlaneModel;
+}
+
+export default function CardItem({ data }: Props) {
+  const { navigate } = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   return (
-    <View
-      style={styles.container}
-      onTouchStart={() =>
-        navigate('InfoPlane' as never, {
-          ...params,
-          airPlaneName: 'VietNam Airline',
-          timeFrom: '08:00',
-          timeTo: '10:00',
-          price: '5.000.000',
+    <TouchableOpacity
+      onPress={() =>
+        navigate('InfoPlane', {
+          data: data,
         })
       }>
-      <Text style={styles.textInfo}>VietNam Airline</Text>
-      <View style={styles.wrapInfo}>
-        <View>
-          <View style={styles.wrapTime}>
-            <Text style={styles.textInfo}>08:00</Text>
-            <Text style={styles.textInfo}> - </Text>
-            <Text style={styles.textInfo}>10:00 </Text>
+      <View style={styles.container}>
+        <Text style={styles.textInfo}>
+          {data.name} - {data.plane_name}
+        </Text>
+        <View style={styles.wrapInfo}>
+          <Text>
+            Thời gian khởi hành:{' '}
+            <Text style={styles.textInfo}>
+              {moment(data?.start_time).format(FORMAT_DATE)}
+            </Text>
+          </Text>
+        </View>
+        <View style={styles.wrapInfo}>
+          <Text>
+            Thời gian dự kiến:{' '}
+            <Text style={styles.textInfo}>
+              {data.estimate_time} {data.estimate_unit}
+            </Text>
+          </Text>
+        </View>
+        <View style={styles.wrapInfo}>
+          <Text>
+            Số lượng ghế thường:{' '}
+            <Text style={styles.textInfo}>{data.seat_basic_empty}</Text>
+          </Text>
+          <View style={styles.priceWrap}>
+            <Text style={styles.priceText}>VND {data.seat_basic_value}</Text>
+            <Text>/ghế</Text>
           </View>
         </View>
-        <View style={styles.priceWrap}>
-          <Text style={styles.priceText}>VND 5.000.000</Text>
-          <Text>/khách</Text>
+        <View style={styles.wrapInfo}>
+          <Text>
+            Số lượng ghế thương gia:{' '}
+            <Text style={styles.textInfo}>{data.seat_vip_empty}</Text>
+          </Text>
+          <View style={styles.priceWrap}>
+            <Text style={styles.priceText}>VND {data.seat_vip_value}</Text>
+            <Text>/ghế</Text>
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
@@ -41,20 +72,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 15,
     borderRadius: 5,
+    marginVertical: 5,
   },
   wrapInfo: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 10,
+    marginTop: 5,
   },
   textInfo: {
     color: 'black',
   },
   wrapTime: {
-    width: 150,
-    display: 'flex',
-    flexDirection: 'row',
+    // width: 150,
+    // display: 'flex',
+    // flexDirection: 'row',
     // justifyContent: 'space-between',
   },
   priceText: {

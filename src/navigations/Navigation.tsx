@@ -7,7 +7,7 @@ import ListPlane from '../screen/booking-plane/list-airplane';
 import InputInfomation from '../screen/booking-plane/input-information';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import ArrowRightIconSVG from '../../assets/svg/ArrowRightIconSVG';
-import InfoContact from '../screen/booking-plane/InfoContact';
+// import InfoContact from '../screen/booking-plane/InfoContact';
 import InfoCustomer from '../screen/booking-plane/info-customer';
 import PaymentPlane from '../screen/booking-plane/payment';
 import ListCar from '../screen/booking-car/list-car';
@@ -24,16 +24,29 @@ import LoginScreen from '../screen/login';
 import DetailHotel from '../screen/booking-hotel/detail-hotel';
 import SelectRoom from '../screen/booking-hotel/SelectRoom';
 import { useNavigation } from '@react-navigation/native';
+import { PlaneModel, PlaneParams } from '../model/plane.model';
+import { CarParams } from '../model/car.model';
+import RegisterScreen from '../screen/register';
 
 export type RootStackParamList = {
-  ListCar: any;
-  BottomTabs: { data: string };
+  ListCar: CarParams;
+  BottomTabs: any;
   Home: any;
-  ListPlane: any;
-  InfoPlane: any;
+  ListPlane: PlaneParams;
+  InfoPlane: { data: PlaneModel };
+  PaymentPlane: {
+    data: PlaneModel;
+    seatBasicCount: number;
+    seatVipCount: number;
+    userContact: {
+      lastName: string;
+      firstName: string;
+      phoneNumber: string;
+      email: string;
+    };
+  };
   InfoContactPlane: any;
   InfoCustomer: any;
-  PaymentPlane: any;
   InfoCar: any;
   InfoContactCar: any;
   InfoCustomerCar: any;
@@ -46,6 +59,7 @@ export type RootStackParamList = {
   InfoCustomerHotel: any;
   InfoContactHotel: any;
   InfoHotel: any;
+  Register: any;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -53,6 +67,16 @@ export default function Navigation() {
   const { goBack } = useNavigation();
   return (
     <Stack.Navigator>
+      <Stack.Screen
+        name="login"
+        component={LoginScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Register"
+        component={RegisterScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="BottomTabs"
         component={BottomNav}
@@ -71,7 +95,7 @@ export default function Navigation() {
                 style={{
                   marginBottom: 15,
                   backgroundColor: '#5B9EDE',
-                  height: 68,
+                  height: 75,
                   padding: 10,
                 }}>
                 <View
@@ -79,9 +103,13 @@ export default function Navigation() {
                     display: 'flex',
                     flexDirection: 'row',
                     alignItems: 'center',
+                    marginTop: 8,
                   }}>
                   <View
-                    style={{ transform: 'rotate(180deg)', marginRight: 10 }}>
+                    style={{
+                      transform: 'rotate(180deg)',
+                      marginRight: 10,
+                    }}>
                     <TouchableOpacity onPress={goBack}>
                       <ArrowRightIconSVG color="#fff" height="35" width="35" />
                     </TouchableOpacity>
@@ -96,10 +124,7 @@ export default function Navigation() {
                       </View>
                       <Text style={styles.textTitle}>{params?.addressTo}</Text>
                     </View>
-                    <Text style={styles.text}>
-                      {params?.dateFrom} • {params?.numberCustomer} •{' '}
-                      {params?.typeSeat}
-                    </Text>
+                    <Text style={styles.text}>{params?.dateFrom}</Text>
                   </View>
                 </View>
               </View>
@@ -121,7 +146,7 @@ export default function Navigation() {
           headerTintColor: '#fff',
         }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="InfoContactPlane"
         component={InfoContact}
         options={{
@@ -134,7 +159,7 @@ export default function Navigation() {
           },
           headerTintColor: '#fff',
         }}
-      />
+      /> */}
       <Stack.Screen
         name="InfoCustomer"
         component={InfoCustomer}
@@ -175,7 +200,7 @@ export default function Navigation() {
                 style={{
                   marginBottom: 15,
                   backgroundColor: '#5B9EDE',
-                  height: 68,
+                  height: 75,
                   padding: 10,
                 }}>
                 <View
@@ -183,6 +208,7 @@ export default function Navigation() {
                     display: 'flex',
                     flexDirection: 'row',
                     alignItems: 'center',
+                    marginTop: 8,
                   }}>
                   <View
                     style={{ transform: 'rotate(180deg)', marginRight: 10 }}>
@@ -278,7 +304,7 @@ export default function Navigation() {
                 style={{
                   marginBottom: 15,
                   backgroundColor: '#5B9EDE',
-                  height: 68,
+                  height: 75,
                   padding: 10,
                 }}>
                 <View
@@ -286,6 +312,7 @@ export default function Navigation() {
                     display: 'flex',
                     flexDirection: 'row',
                     alignItems: 'center',
+                    marginTop: 8,
                   }}>
                   <View
                     style={{ transform: 'rotate(180deg)', marginRight: 10 }}>
@@ -394,7 +421,6 @@ export default function Navigation() {
       />
 
       {/* login */}
-      <Stack.Screen name="login" component={LoginScreen} />
     </Stack.Navigator>
   );
 }

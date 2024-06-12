@@ -1,44 +1,57 @@
 /* eslint-disable react-native/no-inline-styles */
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { RootStackParamList } from '../../../navigations/Navigation';
+import { CarModel } from '../../../model/car.model';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import moment from 'moment';
+import { FORMAT_DATE } from '../../booking-plane';
 
-export default function CardItemCar() {
-  const { params } = useRoute();
-  const { navigate } = useNavigation();
+interface Props {
+  data: CarModel;
+}
+
+export default function CardItemCar({ data }: Props) {
+  const { navigate } = useNavigation<StackNavigationProp<RootStackParamList>>();
+
   return (
-    <View
-      style={styles.container}
-      onTouchStart={() =>
-        navigate('InfoCar' as never, {
-          ...params,
-          carName: 'Nhà xe Đình Lan',
-          typeCar: 'Limousine',
-          timeStart: '12:00',
-          timeEnd: '16:00',
-          price: '500.000',
+    <TouchableOpacity
+      onPress={() =>
+        navigate('InfoCar', {
+          data: data,
         })
       }>
-      <View>
-        <Text style={[styles.textInfo, { fontWeight: '600' }]}>
-          Nhà xe Đình Lan
-        </Text>
-        <Text style={[{ marginTop: 2, fontSize: 12 }]}>Limousine</Text>
-        <View style={styles.wrapInfo}>
-          <View>
-            <View style={styles.wrapTime}>
-              <Text style={styles.textInfo}>12:00</Text>
-              <Text style={styles.textInfo}> - </Text>
-              <Text style={styles.textInfo}>16:00 </Text>
+      <View style={styles.container}>
+        <View>
+          <Text style={[styles.textInfo, { fontWeight: '600' }]}>
+            {data.name}
+          </Text>
+          <Text style={[{ marginTop: 2, fontSize: 12 }]}>{data.car_name}</Text>
+          <View style={styles.wrapInfo}>
+            <View>
+              <View style={styles.wrapTime}>
+                <Text style={styles.textInfo}>
+                  {moment(data.start_time).format(FORMAT_DATE)}
+                </Text>
+                <Text style={styles.textInfo}> - </Text>
+                <Text style={styles.textInfo}>16:00 </Text>
+              </View>
             </View>
           </View>
         </View>
+        <View style={styles.priceWrap}>
+          <Text style={styles.priceText}>
+            VND{' '}
+            {data.seat_value.toLocaleString('en-Us', {
+              style: 'currency',
+            })}
+          </Text>
+          <Text>/chỗ</Text>
+        </View>
       </View>
-      <View style={styles.priceWrap}>
-        <Text style={styles.priceText}>VND 500.000</Text>
-        <Text>/chỗ</Text>
-      </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

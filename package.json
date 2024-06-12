@@ -10,6 +10,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.6.0",
+    "@react-native-async-storage/async-storage": "^1.23.1",
     "@react-native-picker/picker": "^2.7.6",
     "@react-navigation/bottom-tabs": "^6.5.20",
     "@react-navigation/native": "^6.1.17",
@@ -17,15 +19,20 @@
     "@rneui/base": "^4.0.0-rc.8",
     "@rneui/themed": "^4.0.0-rc.8",
     "@tanstack/react-query": "^5.35.1",
+    "@types/lodash": "^4.17.5",
     "axios": "^1.6.8",
     "deprecated-react-native-prop-types": "^5.0.0",
+    "lodash": "^4.17.21",
     "moment": "^2.30.1",
+    "query-string": "^9.0.0",
     "react": "18.2.0",
+    "react-hook-form": "^7.51.5",
     "react-native": "0.73.6",
     "react-native-dashed-line": "^1.1.0",
     "react-native-date-picker": "^5.0.2",
     "react-native-gesture-handler": "^2.16.1",
     "react-native-image-slider-box": "^2.0.7",
+    "react-native-input-spinner": "^1.8.1",
     "react-native-modal": "^13.0.1",
     "react-native-paper": "^5.12.3",
     "react-native-picker-select": "^9.1.3",
@@ -34,7 +41,9 @@
     "react-native-step-indicator": "^1.0.3",
     "react-native-svg": "^15.2.0",
     "react-native-toast-message": "^2.2.0",
-    "react-native-vector-icons": "^10.0.3"
+    "react-native-vector-icons": "^10.0.3",
+    "react-native-webview": "^13.10.3",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

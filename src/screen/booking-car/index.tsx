@@ -18,14 +18,14 @@ export default function BookingCarScreen() {
     from: false,
     to: false,
   });
-  const [valueAddress, setValueAddress] = useState('');
+  // const [valueAddress, setValueAddress] = useState('');
   const [dateFrom, setDateFrom] = useState(new Date());
   const [isOpenModalDate, setIsOpenModalDate] = useState({
     dateFrom: false,
     dateTo: false,
   });
   const [valueAddressFrom, setValueAddressFrom] = useState('');
-  const [numberCustomer, setNumberCustomer] = useState(1);
+  // const [numberCustomer, setNumberCustomer] = useState(1);
   const [valueAddressTo, setValueAddressTo] = useState('');
   const onClose = useCallback(() => {
     setIsOpen({
@@ -107,21 +107,22 @@ export default function BookingCarScreen() {
             showSoftInputOnFocus={false}
           />
 
-          <Input
+          {/* <Input
             label="Số ghế"
             keyboardType="decimal-pad"
             defaultValue="1"
             onChangeText={(e) => setNumberCustomer(Number(e))}
-          />
+          /> */}
           <Button
+            disabled={!valueAddressFrom || !valueAddressTo || !dateFrom}
             title={'Tìm kiếm'}
             buttonStyle={styles.btnSearch}
             onPress={() =>
               navigate('ListCar', {
                 addressFrom: valueAddressFrom,
                 addressTo: valueAddressTo,
-                dateFrom: moment(dateFrom).format(FORMAT_DATE).toString(),
-                numberCustomer: numberCustomer,
+                dateFrom: moment(dateFrom),
+                // numberCustomer: numberCustomer,
               })
             }
           />

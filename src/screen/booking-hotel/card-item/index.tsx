@@ -11,11 +11,13 @@ import {
 import LocationIconSVG from '../../../../assets/svg/LocationIconSVG';
 import DashedLine from 'react-native-dashed-line';
 import { SliderBox } from 'react-native-image-slider-box';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../../navigations/Navigation';
 
 export default function CardItemHotel() {
   const { params } = useRoute();
 
-  const { navigate } = useNavigation();
+  const { navigate } = useNavigation<StackNavigationProp<RootStackParamList>>();
   const images: string[] = [
     'https://dyf.vn/wp-content/uploads/2021/11/thiet-ke-noi-that-phong-khach-san-hien-dai.jpg', // Local image
     'https://dyf.vn/wp-content/uploads/2021/11/thiet-ke-noi-that-phong-khach-san-hien-dai.jpg', // Online image
@@ -23,7 +25,7 @@ export default function CardItemHotel() {
   ];
 
   const onClick = useCallback(() => {
-    navigate('DetailHotel' as never, {
+    navigate('DetailHotel', {
       ...params,
       nameHotel: 'Zalo Sea Hotel',
       price: '1.000.000',

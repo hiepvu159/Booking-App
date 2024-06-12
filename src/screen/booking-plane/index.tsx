@@ -1,8 +1,7 @@
-/* eslint-disable react-native/no-inline-styles */
 import { Card } from '@rneui/base';
 import { Button, Input } from '@rneui/themed';
 import React, { useCallback, useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 
 import PlaneUpIconSVG from '../../../assets/svg/PlaneUpIconSVG';
 import PlanDownIconSVG from '../../../assets/svg/PlanDownIconSVG';
@@ -12,7 +11,6 @@ import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
 import { useNavigation } from '@react-navigation/native';
 import { LIST_ADDRESS } from '../../constant/constant';
-import { Picker } from '@react-native-picker/picker';
 import { RootStackParamList } from '../../navigations/Navigation';
 import { StackNavigationProp } from '@react-navigation/stack';
 
@@ -27,8 +25,8 @@ export default function BookingPlane() {
   const [dateFrom, setDateFrom] = useState(new Date());
   const [valueAddressFrom, setValueAddressFrom] = useState('');
   const [valueAddressTo, setValueAddressTo] = useState('');
-  const [typeSeat, setTypeSeat] = useState('Thương gia');
-  const [numberCustomer, setNumberCustomer] = useState(1);
+  // const [typeSeat, setTypeSeat] = useState('');
+  // const [numberCustomer, setNumberCustomer] = useState(1);
   const [isOpenModalDate, setIsOpenModalDate] = useState({
     dateFrom: false,
     dateTo: false,
@@ -54,7 +52,7 @@ export default function BookingPlane() {
     }));
   }, []);
 
-  const handleSubmit = useCallback(
+  const handleSubmitModal = useCallback(
     (value) => {
       if (isOpen.from) {
         return setValueAddressFrom(value);
@@ -69,7 +67,7 @@ export default function BookingPlane() {
       <ScrollView>
         <Card containerStyle={styles.card}>
           <Input
-            label="Điểm xuất phát"
+            label="Từ"
             leftIcon={<PlaneUpIconSVG />}
             placeholder="Vui lòng chọn sân bay đi"
             onTouchStart={() => handleFocus('from')}
@@ -113,7 +111,7 @@ export default function BookingPlane() {
             showSoftInputOnFocus={false}
           />
 
-          <View style={styles.wrapInput}>
+          {/* <View style={styles.wrapInput}>
             <Input
               label="Hành khách"
               keyboardType="decimal-pad"
@@ -132,17 +130,18 @@ export default function BookingPlane() {
                 <Picker.Item label="Bình dân" value="Bình dân" />
               </Picker>
             </View>
-          </View>
+          </View> */}
           <Button
             title={'Tìm kiếm'}
             buttonStyle={styles.btnSearch}
+            disabled={!valueAddressFrom || !valueAddressTo || !dateFrom}
             onPress={() => {
               navigate('ListPlane', {
                 addressFrom: valueAddressFrom,
                 addressTo: valueAddressTo,
-                dateFrom: moment(dateFrom).format(FORMAT_DATE).toString(),
-                typeSeat: typeSeat,
-                numberCustomer: numberCustomer,
+                dateFrom: moment(dateFrom).format(FORMAT_DATE),
+                // typeSeat: typeSeat,
+                // numberCustomer: numberCustomer,
               });
             }}
           />
@@ -151,7 +150,7 @@ export default function BookingPlane() {
       <ModalSelect
         isOpen={isOpen.from || isOpen.to}
         onClose={onClose}
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmitModal}
         data={LIST_ADDRESS}
       />
     </View>

@@ -2,38 +2,46 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import ArrowRightIconSVG from '../../../assets/svg/ArrowRightIconSVG';
-import { useRoute } from '@react-navigation/native';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { RootStackParamList } from '../../navigations/Navigation';
+import moment from 'moment';
+import { FORMAT_DATE } from '../../screen/booking-plane';
 
 export default function CardDetailPlane() {
-  const { params }: any = useRoute();
-  console.log('🚀 ~ CardDetailPlane ~ params:', params);
+  const {
+    params: { data },
+  } = useRoute<RouteProp<RootStackParamList, 'InfoPlane'>>();
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.textInfo, styles.header]}>CN, 28 thg 4 2024</Text>
+      <Text style={[styles.textInfo, styles.header]}>
+        {moment(data.start_time).format(FORMAT_DATE)}
+      </Text>
       <View style={{ display: 'flex', flexDirection: 'row' }}>
         <Text style={[styles.textInfo, styles.header, { marginTop: 10 }]}>
-          {params?.addressFrom}
+          {data.start_location}
         </Text>
         <View style={{ marginTop: 10, marginHorizontal: 5 }}>
           <ArrowRightIconSVG height="20" width="20" />
         </View>
         <Text style={[styles.textInfo, styles.header, { marginTop: 10 }]}>
-          {params?.addressTo}
+          {data.end_location}
         </Text>
       </View>
 
       <View style={styles.wrapInfo}>
         <View>
           <View style={styles.wrapTime}>
-            <Text style={styles.textInfo}>{params?.timeFrom}</Text>
+            <Text style={styles.textInfo}>{data.name}</Text>
             <Text style={styles.textInfo}> - </Text>
-            <Text style={styles.textInfo}>{params?.timeTo} </Text>
+            <Text style={styles.textInfo}>{data.plane_name} </Text>
           </View>
         </View>
       </View>
       <View style={{ marginTop: 5 }}>
-        <Text style={styles.textInfo}>{params?.typeSeat}</Text>
+        <Text style={styles.textInfo}>
+          Thời gian dự kiến: {data.estimate_time} {data.estimate_unit}
+        </Text>
       </View>
     </View>
   );

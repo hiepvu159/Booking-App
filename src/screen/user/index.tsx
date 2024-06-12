@@ -1,9 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { Button } from '@rneui/themed';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { RootStackParamList } from '../../navigations/Navigation';
 
 export default function UserScreen() {
+  const { navigate } = useNavigation<StackNavigationProp<RootStackParamList>>();
   return (
     <View>
       <View style={styles.wrapHeader}>
@@ -21,6 +25,7 @@ export default function UserScreen() {
           }}
           titleStyle={{ color: '#fff', fontSize: 16, fontWeight: '600' }}
           size="lg"
+          onPress={() => navigate('login')}
         />
       </View>
     </View>
