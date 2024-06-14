@@ -2,38 +2,22 @@ import { Button, Card, Input } from '@rneui/themed';
 import React, { useCallback, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import CarIconSVG from '../../../assets/svg/CarIconSVG';
-import DatePicker from 'react-native-date-picker';
 import { useNavigation } from '@react-navigation/native';
-import moment from 'moment';
-import { FORMAT_DATE } from '../booking-plane';
-import CalendarIconSVG from '../../../assets/svg/CalendarIconSVG';
 import ModalSelect from '../../components/modal-select/indext';
 import { LIST_ADDRESS } from '../../constant/constant';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../navigations/Navigation';
 
 export default function BookingHotelScreen() {
-  const { navigate } = useNavigation();
+  const { navigate } = useNavigation<StackNavigationProp<RootStackParamList>>();
   const [isOpen, setIsOpen] = useState(false);
   const [valueAddress, setValueAddress] = useState('');
-  const [data, setData] = useState();
-  const [dateFrom, setDateFrom] = useState(moment().toDate());
-  const [isOpenModalDate, setIsOpenModalDate] = useState({
-    dateFrom: false,
-    dateTo: false,
-  });
   const onClose = useCallback(() => {
     setIsOpen(false);
   }, []);
 
-  const handleFocus = useCallback((value) => {
+  const handleFocus = useCallback(() => {
     setIsOpen(true);
-    setData(value);
-  }, []);
-
-  const handleCloseModalDateFrom = useCallback(() => {
-    setIsOpenModalDate((prev) => ({
-      ...prev,
-      dateFrom: false,
-    }));
   }, []);
 
   return (
@@ -44,47 +28,43 @@ export default function BookingHotelScreen() {
             label="Địa điểm"
             leftIcon={<CarIconSVG />}
             placeholder="Vui lòng chọn địa điểm"
-            onTouchStart={() => handleFocus('from')}
+            onTouchStart={handleFocus}
             showSoftInputOnFocus={false}
             value={valueAddress}
           />
 
-          <DatePicker
+          {/* <DatePicker
             modal
             mode="date"
             locale="vie"
-            open={isOpenModalDate.dateFrom}
+            open={isOpenModalDate}
             date={dateFrom}
             onCancel={handleCloseModalDateFrom}
             onConfirm={(e) => {
               setDateFrom(e);
               handleCloseModalDateFrom();
             }}
-            title={'Ngày '}
+            title={'Ngày khởi hành'}
             confirmText="Xác nhận"
             cancelText="Quay lại"
           />
           <Input
             value={moment(dateFrom).format(FORMAT_DATE).toString()}
-            label="Ngày "
+            label="Ngày khởi hành"
             leftIcon={<CalendarIconSVG />}
-            placeholder="Vui lòng chọn ngày "
-            onTouchStart={() =>
-              setIsOpenModalDate((prev) => ({
-                ...prev,
-                dateFrom: true,
-              }))
-            }
+            placeholder="Vui lòng chọn ngày khởi hành"
+            onTouchStart={() => setIsOpenModalDate((prev) => !prev)}
             showSoftInputOnFocus={false}
-          />
+          /> */}
 
           <Button
+            disabled={!valueAddress}
             title={'Tìm kiếm'}
             buttonStyle={styles.btnSearch}
             onPress={() =>
-              navigate('ListHotel' as never, {
-                address: valueAddress,
-                date: moment(dateFrom).format(FORMAT_DATE).toString(),
+              navigate('ListHotel', {
+                addressFrom: valueAddress,
+                // dateFrom: moment(dateFrom).format(FORMAT_DATE).toString(),
               })
             }
           />

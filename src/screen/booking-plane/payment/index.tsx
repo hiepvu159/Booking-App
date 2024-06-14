@@ -9,6 +9,7 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../../navigations/Navigation';
 import { paymentTicketPlane } from '../../../api/booking-plane.api';
+import { toastError, toastSuccess } from '../../../helper/toast.config';
 
 export default function PaymentPlane() {
   const { params } = useRoute<RouteProp<RootStackParamList, 'PaymentPlane'>>();
@@ -24,10 +25,13 @@ export default function PaymentPlane() {
       seat_vip_number: params.seatVipCount,
     })
       .then(() => {
-        console.log('success');
+        toastSuccess('Thanh toán thành công');
+        navigate('BottomTabs');
       })
-      .catch((err) => console.log(err));
-  }, [params]);
+      .catch(() => {
+        toastError('Vui lòng thử lại');
+      });
+  }, [navigate, params]);
 
   return (
     <View

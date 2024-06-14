@@ -5,7 +5,7 @@ import ArrowRightIconSVG from '../../../assets/svg/ArrowRightIconSVG';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../../navigations/Navigation';
 import moment from 'moment';
-import { FORMAT_DATE } from '../../screen/booking-plane';
+import { FORMAT_DATE, FORMAT_TIME } from '../../screen/booking-plane';
 
 export default function CardDetailPlane() {
   const {
@@ -40,7 +40,13 @@ export default function CardDetailPlane() {
       </View>
       <View style={{ marginTop: 5 }}>
         <Text style={styles.textInfo}>
-          Thời gian dự kiến: {data.estimate_time} {data.estimate_unit}
+          Thời gian khởi hành: {moment(data.start_time).format(FORMAT_TIME)}
+        </Text>
+      </View>
+      <View style={{ marginTop: 5 }}>
+        <Text style={styles.textInfo}>
+          Thời lượng di chuyển dự kiến: {data.estimate_time}{' '}
+          {data.estimate_unit}
         </Text>
       </View>
     </View>

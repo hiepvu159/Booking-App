@@ -26,29 +26,36 @@ export default function CardItemCar({ data }: Props) {
       <View style={styles.container}>
         <View>
           <Text style={[styles.textInfo, { fontWeight: '600' }]}>
-            {data.name}
+            {data.name} - {data.car_name}
           </Text>
-          <Text style={[{ marginTop: 2, fontSize: 12 }]}>{data.car_name}</Text>
           <View style={styles.wrapInfo}>
-            <View>
-              <View style={styles.wrapTime}>
-                <Text style={styles.textInfo}>
-                  {moment(data.start_time).format(FORMAT_DATE)}
-                </Text>
-                <Text style={styles.textInfo}> - </Text>
-                <Text style={styles.textInfo}>16:00 </Text>
-              </View>
-            </View>
+            <Text>
+              Thời gian khởi hành:{' '}
+              <Text style={styles.textInfo}>
+                {moment(data.start_time).format(FORMAT_DATE)}
+              </Text>
+            </Text>
+          </View>
+          <View style={styles.wrapInfo}>
+            <Text>
+              Thời gian dự kiến:{' '}
+              <Text style={styles.textInfo}>
+                {moment(data.start_time).format(FORMAT_DATE)}
+              </Text>
+            </Text>
           </View>
         </View>
-        <View style={styles.priceWrap}>
-          <Text style={styles.priceText}>
-            VND{' '}
-            {data.seat_value.toLocaleString('en-Us', {
-              style: 'currency',
-            })}
+        <View style={styles.wrapInfo}>
+          <Text>
+            Số lượng ghế còn trống:{' '}
+            <Text style={styles.textInfo}>{data.seat_empty}</Text>
           </Text>
-          <Text>/chỗ</Text>
+          <View style={styles.priceWrap}>
+            <Text style={styles.priceText}>
+              VND {data.seat_value.toLocaleString('en-us')}
+            </Text>
+            <Text>/ghế</Text>
+          </View>
         </View>
       </View>
     </TouchableOpacity>
@@ -60,23 +67,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 15,
     borderRadius: 5,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    marginVertical: 5,
   },
   wrapInfo: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 10,
+    marginTop: 5,
   },
   textInfo: {
     color: 'black',
   },
   wrapTime: {
-    width: 150,
-    display: 'flex',
-    flexDirection: 'row',
+    // width: 150,
+    // display: 'flex',
+    // flexDirection: 'row',
     // justifyContent: 'space-between',
   },
   priceText: {

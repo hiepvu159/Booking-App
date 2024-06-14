@@ -125,6 +125,7 @@ const data_fake: PlaneModel[] = [
 export default function ListPlane() {
   const { params } = useRoute<RouteProp<RootStackParamList, 'ListPlane'>>();
   const [listPlane, setListPlane] = useState<PlaneModel[]>(data_fake);
+
   useEffect(() => {
     getListTicketPlane({
       start_location: params.addressFrom,

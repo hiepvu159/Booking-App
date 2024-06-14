@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import React, { useCallback } from 'react';
 import {
   Dimensions,
@@ -13,10 +13,9 @@ import DashedLine from 'react-native-dashed-line';
 import { SliderBox } from 'react-native-image-slider-box';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../../navigations/Navigation';
+import { HotelModel } from '../../../model/hotel.model';
 
-export default function CardItemHotel() {
-  const { params } = useRoute();
-
+export default function CardItemHotel({ data }: { data: HotelModel }) {
   const { navigate } = useNavigation<StackNavigationProp<RootStackParamList>>();
   const images: string[] = [
     'https://dyf.vn/wp-content/uploads/2021/11/thiet-ke-noi-that-phong-khach-san-hien-dai.jpg', // Local image
@@ -26,16 +25,18 @@ export default function CardItemHotel() {
 
   const onClick = useCallback(() => {
     navigate('DetailHotel', {
-      ...params,
-      nameHotel: 'Zalo Sea Hotel',
-      price: '1.000.000',
-      addressHotel: 'Phước Mỹ, Đà Nẵng',
+      data: data,
     });
-  }, [navigate, params]);
+  }, [data, navigate]);
 
   return (
     <TouchableOpacity onPress={onClick}>
-      <View style={{ backgroundColor: '#fff', borderRadius: 5 }}>
+      <View
+        style={{
+          backgroundColor: '#fff',
+          borderRadius: 5,
+          marginVertical: 10,
+        }}>
         <SliderBox
           images={images}
           sliderBoxHeight={150}
@@ -45,7 +46,7 @@ export default function CardItemHotel() {
         <View style={styles.container}>
           <View>
             <Text style={[styles.textInfo, { fontWeight: '600' }]}>
-              Zalo Sea Hotel
+              {data.name}
             </Text>
             <View
               style={{
@@ -56,7 +57,7 @@ export default function CardItemHotel() {
               }}>
               <LocationIconSVG />
               <Text style={[{ marginTop: 2, fontSize: 13 }]}>
-                Phước Mỹ, Đà Nẵng
+                {data.location}
               </Text>
             </View>
           </View>
@@ -69,9 +70,9 @@ export default function CardItemHotel() {
             dashGap={1}
           />
         </View>
-        <View style={styles.priceWrap}>
-          <Text style={styles.priceText}>VND 1.000.000</Text>
-          <Text>/phòng/đêm</Text>
+        <View style={{ paddingHorizontal: 15, paddingVertical: 10 }}>
+          <Text>Số phòng thường còn trống: {data.room_basic_empty}</Text>
+          <Text>Số phòng VIP còn trống: {data.room_vip_empty}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -89,7 +90,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 10,
   },
   textInfo: {
     color: 'black',

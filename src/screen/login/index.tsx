@@ -46,13 +46,14 @@ export default function LoginScreen() {
 
   const onSubmit = useCallback(
     async (value: LoginParams) => {
-      loginAPI({
-        username: value.username,
-        password: value.password,
-      }).then(async (res) => {
-        await AsyncStorage.setItem('token', res.data.access_token);
-        navigate('BottomTabs');
-      });
+      navigate('BottomTabs');
+      // loginAPI({
+      //   username: value.username,
+      //   password: value.password,
+      // }).then(async (res) => {
+      //   await AsyncStorage.setItem('token', res.data.access_token);
+      //   navigate('BottomTabs');
+      // });
       // .catch((err) => {});
     },
     [navigate],

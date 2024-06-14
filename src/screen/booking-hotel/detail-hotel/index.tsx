@@ -1,26 +1,69 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
 import LocationIconSVG from '../../../../assets/svg/LocationIconSVG';
 import { Button, Divider } from '@rneui/themed';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { RouteProp, useRoute } from '@react-navigation/native';
 import ElevatorIconSVG from '../../../../assets/svg/ElevatorIconSVG';
 import AirConditionerIconSVG from '../../../../assets/svg/AirConditionerIconSVG';
 import ReceptionistIconSVG from '../../../../assets/svg/ReceptionistIconSVG';
 import WifiIconSVG from '../../../../assets/svg/WifiIconSVG';
 import CutleryIconSVG from '../../../../assets/svg/CutleryIconSVG';
 import ParkingIconSVG from '../../../../assets/svg/ParkingIconSVG';
+import { RootStackParamList } from '../../../navigations/Navigation';
+import ModalFullScreen from '../../../components/modal-fullscreen';
+import SelectRoom from '../SelectRoom';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import ArrowRightIconSVG from '../../../../assets/svg/ArrowRightIconSVG';
 
 export default function DetailHotel() {
-  const { params }: any = useRoute();
+  const { params } = useRoute<RouteProp<RootStackParamList, 'DetailHotel'>>();
+  const [isOpen, setIsOpen] = useState(false);
 
-  const { navigate } = useNavigation();
   const images: string[] = [
     'https://dyf.vn/wp-content/uploads/2021/11/thiet-ke-noi-that-phong-khach-san-hien-dai.jpg', // Local image
     'https://dyf.vn/wp-content/uploads/2021/11/thiet-ke-noi-that-phong-khach-san-hien-dai.jpg', // Online image
     // ... more images
   ];
+
+  const onCloseModal = useCallback(() => {
+    setIsOpen(false);
+  }, []);
+
+  const headerModal = useMemo(() => {
+    return (
+      <View
+        style={{
+          // marginBottom: 15,
+          backgroundColor: '#5B9EDE',
+          height: 60,
+          padding: 10,
+        }}>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginTop: 8,
+          }}>
+          <View
+            style={{
+              transform: 'rotate(180deg)',
+              marginRight: 10,
+            }}>
+            <TouchableOpacity onPress={onCloseModal}>
+              <ArrowRightIconSVG color="#fff" height="25" width="25" />
+            </TouchableOpacity>
+          </View>
+          <View>
+            <Text style={[styles.text, styles.textTitle]}>Chọn số lượng</Text>
+          </View>
+        </View>
+      </View>
+    );
+  }, [onCloseModal]);
+
   return (
     <View
       style={{
@@ -39,7 +82,7 @@ export default function DetailHotel() {
         <View style={{ padding: 15 }}>
           <View style={{ marginBottom: 10 }}>
             <Text style={[styles.textInfo, { fontWeight: '600' }]}>
-              {params?.nameHotel}
+              {params.data.name}
             </Text>
             <View
               style={{
@@ -50,7 +93,7 @@ export default function DetailHotel() {
               }}>
               <LocationIconSVG />
               <Text style={[{ marginTop: 2, fontSize: 13 }]}>
-                {params?.addressHotel}
+                {params.data.location}
               </Text>
             </View>
           </View>
@@ -128,7 +171,7 @@ export default function DetailHotel() {
           <Divider />
           <View style={{ paddingVertical: 10 }}>
             <Text>Mô Tả</Text>
-            <Text></Text>
+            {/* <Text></Text> */}
           </View>
         </View>
       </View>
@@ -136,7 +179,13 @@ export default function DetailHotel() {
         title={'Chọn phòng'}
         size="lg"
         buttonStyle={{ backgroundColor: '#F4601F' }}
-        onPress={() => navigate('SelectRoom' as never, params)}
+        onPress={() => setIsOpen(true)}
+      />
+      <ModalFullScreen
+        header={headerModal}
+        content={<SelectRoom />}
+        isOpen={isOpen}
+        onClose={onCloseModal}
       />
     </View>
   );
@@ -179,5 +228,13 @@ const styles = StyleSheet.create({
   textUltis: {
     // color:''
     fontSize: 12,
+  },
+  text: {
+    color: '#fff',
+  },
+  textTitle: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 18,
   },
 });

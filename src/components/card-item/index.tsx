@@ -17,11 +17,11 @@ export default function CardItem({ data }: Props) {
 
   return (
     <TouchableOpacity
-      onPress={() =>
+      onPress={() => {
         navigate('InfoPlane', {
           data: data,
-        })
-      }>
+        });
+      }}>
       <View style={styles.container}>
         <Text style={styles.textInfo}>
           {data.name} - {data.plane_name}
@@ -48,7 +48,9 @@ export default function CardItem({ data }: Props) {
             <Text style={styles.textInfo}>{data.seat_basic_empty}</Text>
           </Text>
           <View style={styles.priceWrap}>
-            <Text style={styles.priceText}>VND {data.seat_basic_value}</Text>
+            <Text style={styles.priceText}>
+              VND {data.seat_basic_value.toLocaleString('en-us')}
+            </Text>
             <Text>/ghế</Text>
           </View>
         </View>
@@ -58,7 +60,9 @@ export default function CardItem({ data }: Props) {
             <Text style={styles.textInfo}>{data.seat_vip_empty}</Text>
           </Text>
           <View style={styles.priceWrap}>
-            <Text style={styles.priceText}>VND {data.seat_vip_value}</Text>
+            <Text style={styles.priceText}>
+              VND {data.seat_vip_value.toLocaleString('en-us')}
+            </Text>
             <Text>/ghế</Text>
           </View>
         </View>

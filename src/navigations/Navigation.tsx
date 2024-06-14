@@ -7,7 +7,6 @@ import ListPlane from '../screen/booking-plane/list-airplane';
 import InputInfomation from '../screen/booking-plane/input-information';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import ArrowRightIconSVG from '../../assets/svg/ArrowRightIconSVG';
-// import InfoContact from '../screen/booking-plane/InfoContact';
 import InfoCustomer from '../screen/booking-plane/info-customer';
 import PaymentPlane from '../screen/booking-plane/payment';
 import ListCar from '../screen/booking-car/list-car';
@@ -17,7 +16,6 @@ import InfoCustomerCar from '../screen/booking-car/info-customer';
 import PaymentCar from '../screen/booking-car/payment';
 import ListHotels from '../screen/booking-hotel/list-hotels';
 import InputInfomationHotel from '../screen/booking-hotel/input-information';
-import InfoContactHotel from '../screen/booking-hotel/InfoContact';
 import InfoCustomerHotel from '../screen/booking-hotel/info-customer';
 import PaymentHotel from '../screen/booking-hotel/payment';
 import LoginScreen from '../screen/login';
@@ -25,8 +23,11 @@ import DetailHotel from '../screen/booking-hotel/detail-hotel';
 import SelectRoom from '../screen/booking-hotel/SelectRoom';
 import { useNavigation } from '@react-navigation/native';
 import { PlaneModel, PlaneParams } from '../model/plane.model';
-import { CarParams } from '../model/car.model';
+import { CarModel, CarParams } from '../model/car.model';
 import RegisterScreen from '../screen/register';
+import { FORMAT_DATE } from '../screen/booking-plane';
+import moment from 'moment';
+import { HotelModel, HotelParams } from '../model/hotel.model';
 
 export type RootStackParamList = {
   ListCar: CarParams;
@@ -47,18 +48,49 @@ export type RootStackParamList = {
   };
   InfoContactPlane: any;
   InfoCustomer: any;
-  InfoCar: any;
+  InfoCar: { data: CarModel };
   InfoContactCar: any;
   InfoCustomerCar: any;
-  PaymentCar: any;
-  ListHotel: any;
+  PaymentCar: {
+    data: CarModel;
+    seatCount: number;
+    userContact: {
+      lastName: string;
+      firstName: string;
+      phoneNumber: string;
+      email: string;
+    };
+  };
+  ListHotel: HotelParams;
   login: any;
   SelectRoom: any;
-  DetailHotel: any;
-  PaymentHotel: any;
+  DetailHotel: { data: HotelModel };
+  PaymentHotel: {
+    data: HotelModel;
+    roomVip: number;
+    roomNor: number;
+    userContact: {
+      lastName: string;
+      firstName: string;
+      phoneNumber: string;
+      email: string;
+    };
+    valueRoom: {
+      roomNor: number;
+      roomVip: number;
+    };
+  };
   InfoCustomerHotel: any;
-  InfoContactHotel: any;
-  InfoHotel: any;
+  // InfoContactHotel: any;
+  InfoHotel: {
+    data: HotelModel;
+    roomVip: number;
+    roomNor: number;
+    valueRoom: {
+      roomNor: number;
+      roomVip: number;
+    };
+  };
   Register: any;
 };
 
@@ -124,7 +156,9 @@ export default function Navigation() {
                       </View>
                       <Text style={styles.textTitle}>{params?.addressTo}</Text>
                     </View>
-                    <Text style={styles.text}>{params?.dateFrom}</Text>
+                    <Text style={styles.text}>
+                      {moment(params?.dateFrom).format(FORMAT_DATE)}
+                    </Text>
                   </View>
                 </View>
               </View>
@@ -227,7 +261,7 @@ export default function Navigation() {
                       <Text style={styles.textTitle}>{params?.addressTo}</Text>
                     </View>
                     <Text style={styles.text}>
-                      {params?.dateFrom} • {params?.numberCustomer} Ghế
+                      {moment(params?.dateFrom).format(FORMAT_DATE)}
                     </Text>
                   </View>
                 </View>
@@ -322,9 +356,8 @@ export default function Navigation() {
                   </View>
                   <View>
                     <View style={styles.wrapAddress}>
-                      <Text style={styles.textTitle}>{params?.address}</Text>
+                      <Text style={styles.textTitle}>{params.addressFrom}</Text>
                     </View>
-                    <Text style={styles.text}>{params?.date}</Text>
                   </View>
                 </View>
               </View>
@@ -346,7 +379,7 @@ export default function Navigation() {
           headerTintColor: '#fff',
         }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="InfoContactHotel"
         component={InfoContactHotel}
         options={{
@@ -359,7 +392,7 @@ export default function Navigation() {
           },
           headerTintColor: '#fff',
         }}
-      />
+      /> */}
       <Stack.Screen
         name="InfoCustomerHotel"
         component={InfoCustomerHotel}

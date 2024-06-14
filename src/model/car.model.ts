@@ -1,4 +1,4 @@
-import moment from 'moment';
+// import moment from 'moment';
 
 export interface CarParams {
   addressFrom: string;
@@ -11,7 +11,7 @@ export interface CarModel {
   name: string;
   start_location: string;
   end_location: string;
-  start_time: moment.Moment;
+  start_time: any;
   estimate_time: number;
   estimate_unit: any;
   car_id: number;

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import { Button, Divider, SearchBar } from '@rneui/themed';
 import React from 'react';

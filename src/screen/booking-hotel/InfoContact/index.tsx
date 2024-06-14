@@ -1,33 +1,81 @@
-/* eslint-disable no-self-compare */
 /* eslint-disable react-native/no-inline-styles */
 import { Button, Input } from '@rneui/themed';
 import React, { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import InfoIconSVG from '../../../../assets/svg/InfoIconSVG';
+import { Controller } from 'react-hook-form';
 
-export default function InfoContactHotel() {
+interface Props {
+  control: any;
+  onSubmit: (value) => void;
+}
+
+export default function InfoContactHotel({ control, onSubmit }: Props) {
   const formInfo = useMemo(() => {
     return (
       <View
         style={{
           paddingHorizontal: 10,
-          paddingVertical: 20,
+          // paddingVertical: 20,
           backgroundColor: '#fff',
         }}>
-        <Input
-          placeholder="Họ (vd: Nguyen)"
-          inputStyle={styles.inputStyle}
-          errorMessage="như trên CMND (không dấu)"
-          errorStyle={{ color: 1 === 1 ? '#9BA5AE' : 'red' }}
+        <Controller
+          name="firstName"
+          control={control}
+          render={({ fieldState, field }) => {
+            return (
+              <Input
+                placeholder="Họ (vd: Nguyen)"
+                inputStyle={styles.inputStyle}
+                errorMessage={fieldState?.error?.message}
+                errorStyle={{
+                  color: !fieldState?.error?.message ? '#9BA5AE' : 'red',
+                }}
+                onChange={(e) => {
+                  field.onChange(e.nativeEvent.text);
+                }}
+                value={field.value}
+              />
+            );
+          }}
         />
-        <Input
-          placeholder="Tên Đệm & tên (vd: Thi Ngoc Anh)"
-          inputStyle={styles.inputStyle}
-          errorMessage="như trên CMND (không dấu)"
-          errorStyle={{ color: 1 === 1 ? '#9BA5AE' : 'red' }}
-          inputContainerStyle={{}}
+        <Controller
+          name="lastName"
+          control={control}
+          render={({ fieldState, field }) => (
+            <Input
+              placeholder="Tên Đệm & tên (vd: Thi Ngoc Anh)"
+              inputStyle={styles.inputStyle}
+              errorMessage={fieldState?.error?.message}
+              errorStyle={{
+                color: !fieldState?.error?.message ? '#9BA5AE' : 'red',
+              }}
+              onChange={(e) => {
+                field.onChange(e.nativeEvent.text);
+              }}
+              value={field.value}
+            />
+          )}
         />
-        <View
+        <Controller
+          name="phoneNumber"
+          control={control}
+          render={({ fieldState, field }) => (
+            <Input
+              placeholder="Điện thoại di động"
+              inputStyle={styles.inputStyle}
+              errorMessage={fieldState?.error?.message}
+              errorStyle={{
+                color: !fieldState?.error?.message ? '#9BA5AE' : 'red',
+              }}
+              onChange={(e) => {
+                field.onChange(e.nativeEvent.text);
+              }}
+              value={field.value}
+            />
+          )}
+        />
+        {/* <View
           style={{
             display: 'flex',
             flexDirection: 'row',
@@ -35,21 +83,34 @@ export default function InfoContactHotel() {
             marginTop: 10,
           }}>
           <Input
-            label="Điện thoại di động"
+            label="Mã quốc gia"
+            containerStyle={{ width: 130 }}
             inputContainerStyle={styles.inputContainerStyle}
             inputStyle={styles.inputStyle}
             labelStyle={styles.labelInput}
           />
-        </View>
-        <Input
-          placeholder="Email"
-          inputStyle={styles.inputStyle}
-          errorMessage="VD: email@example.com"
-          errorStyle={{ color: 1 === 1 ? '#9BA5AE' : 'red' }}
+        </View> */}
+        <Controller
+          name="email"
+          control={control}
+          render={({ fieldState, field }) => (
+            <Input
+              placeholder="Email"
+              inputStyle={styles.inputStyle}
+              errorMessage={fieldState?.error?.message}
+              errorStyle={{
+                color: !fieldState?.error?.message ? '#9BA5AE' : 'red',
+              }}
+              onChange={(e) => {
+                field.onChange(e.nativeEvent.text);
+              }}
+              value={field.value}
+            />
+          )}
         />
       </View>
     );
-  }, []);
+  }, [control]);
   return (
     <View>
       {formInfo}
@@ -79,7 +140,7 @@ export default function InfoContactHotel() {
             hoàn tiền hoặc đổi lịch bay.
           </Text>
         </View>
-        <Button title={'Lưu'} color={'#F4601F'} />
+        <Button title={'Lưu'} color={'#F4601F'} onPress={onSubmit} />
       </View>
     </View>
   );

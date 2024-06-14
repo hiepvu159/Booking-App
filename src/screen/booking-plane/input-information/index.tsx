@@ -20,7 +20,7 @@ import * as yup from 'yup';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { isEqual } from 'lodash';
 
-const defaultValues = {
+export const defaultValues = {
   lastName: '',
   firstName: '',
   phoneNumber: '',

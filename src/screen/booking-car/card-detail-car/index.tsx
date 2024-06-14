@@ -2,37 +2,51 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import ArrowRightIconSVG from '../../../../assets/svg/ArrowRightIconSVG';
-import { useRoute } from '@react-navigation/native';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { RootStackParamList } from '../../../navigations/Navigation';
+import moment from 'moment';
+import { FORMAT_DATE, FORMAT_TIME } from '../../booking-plane';
 
 export default function CardDetailCar() {
-  const { params }: any = useRoute();
-  console.log('🚀 ~ CardDetailCar ~ params:', params);
+  const {
+    params: { data },
+  } = useRoute<RouteProp<RootStackParamList, 'InfoCar'>>();
   return (
     <View style={styles.container}>
-      <Text style={[styles.textInfo, styles.header]}>{params?.dateFrom}</Text>
+      <Text style={[styles.textInfo, styles.header]}>
+        {moment(data.start_time).format(FORMAT_DATE)}
+      </Text>
       <View style={{ display: 'flex', flexDirection: 'row' }}>
         <Text style={[styles.textInfo, styles.header, { marginTop: 10 }]}>
-          {params?.addressFrom}
+          {data.start_location}
         </Text>
         <View style={{ marginTop: 10, marginHorizontal: 5 }}>
           <ArrowRightIconSVG height="20" width="20" />
         </View>
         <Text style={[styles.textInfo, styles.header, { marginTop: 10 }]}>
-          {params?.addressTo}
+          {data.end_location}
         </Text>
       </View>
 
       <View style={styles.wrapInfo}>
         <View>
           <View style={styles.wrapTime}>
-            <Text style={styles.textInfo}>{params?.timeStart}</Text>
+            <Text style={styles.textInfo}>{data.name}</Text>
             <Text style={styles.textInfo}> - </Text>
-            <Text style={styles.textInfo}>{params?.timeEnd} </Text>
+            <Text style={styles.textInfo}>{data.car_name} </Text>
           </View>
         </View>
       </View>
       <View style={{ marginTop: 5 }}>
-        <Text style={styles.textInfo}>{params?.numberCustomer} Ghế</Text>
+        <Text style={styles.textInfo}>
+          Thời gian khởi hành: {moment(data.start_time).format(FORMAT_TIME)}
+        </Text>
+      </View>
+      <View style={{ marginTop: 5 }}>
+        <Text style={styles.textInfo}>
+          Thời lượng di chuyển dự kiến: {data.estimate_time}{' '}
+          {data.estimate_unit}
+        </Text>
       </View>
     </View>
   );

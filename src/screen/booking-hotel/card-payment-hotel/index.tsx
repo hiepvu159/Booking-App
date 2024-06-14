@@ -1,27 +1,29 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import ArrowRightIconSVG from '../../../../assets/svg/ArrowRightIconSVG';
-import { useRoute } from '@react-navigation/native';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { RootStackParamList } from '../../../navigations/Navigation';
 
 export default function CardPaymentHotel() {
-  const { params }: any = useRoute();
+  const { params } = useRoute<RouteProp<RootStackParamList, 'PaymentHotel'>>();
+
   return (
     <View style={styles.container}>
+      <Text style={[styles.textInfo, { marginTop: 5 }]}>
+        {params.data.location}
+      </Text>
       <View style={{ display: 'flex', flexDirection: 'row' }}>
         <Text style={[styles.textInfo, styles.header, { marginTop: 10 }]}>
-          {params?.nameHotel}
+          {params.data.name}
         </Text>
       </View>
-      <Text style={[styles.textInfo, { marginTop: 5 }]}>
-        {params?.addressHotel}
-      </Text>
-
-      <Text style={[styles.textInfo, { marginTop: 5 }]}>{params?.date}</Text>
 
       <View style={{ marginTop: 5, alignItems: 'center' }}>
         <Text style={[styles.textInfo, { fontWeight: '500' }]}>
-          {params?.typeRoom}
+          Số phòng VIP: {params?.roomVip}
+        </Text>
+        <Text style={[styles.textInfo, { fontWeight: '500' }]}>
+          Số phòng thường: {params?.roomNor}
         </Text>
       </View>
     </View>

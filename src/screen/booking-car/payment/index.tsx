@@ -1,16 +1,37 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, { useCallback } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import ArrowRightForItemIconSVG from '../../../../assets/svg/ArrowRightForItem';
 import WalletIconSVG from '../../../../assets/svg/WalletIconSVG';
 import { Button } from '@rneui/themed';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import CardPaymentCar from '../card-payment-car';
+import { paymentTicketCar } from '../../../api/booking-car.api';
+import { RootStackParamList } from '../../../navigations/Navigation';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { toastError, toastSuccess } from '../../../helper/toast.config';
 
 export default function PaymentCar() {
-  const { params }: any = useRoute();
-  console.log('🚀 ~ PaymentCar ~ params:', params);
-  const { navigate } = useNavigation();
+  const { params } = useRoute<RouteProp<RootStackParamList, 'PaymentCar'>>();
+  const { navigate } = useNavigation<StackNavigationProp<RootStackParamList>>();
+
+  const handlePayment = useCallback(() => {
+    paymentTicketCar({
+      contact_with_name: `${params.userContact.firstName} ${params.userContact.lastName}`,
+      user_id: 123124,
+      car_travel_id: params.data.id,
+      contact_with_phone: params.userContact.phoneNumber,
+      seat_number: params.seatCount,
+    })
+      .then(() => {
+        toastSuccess('Thanh toán thành công');
+        navigate('BottomTabs');
+      })
+      .catch(() => {
+        toastError('Vui lòng thử lại');
+      });
+  }, [navigate, params]);
+
   return (
     <View
       style={{
@@ -60,16 +81,7 @@ export default function PaymentCar() {
         <View style={{ marginVertical: 10 }}>
           <View>
             <View style={[styles.card]}>
-              <View
-                style={[
-                  {
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    marginBottom: 10,
-                  },
-                ]}>
+              <View style={styles.formatPrice}>
                 <Text
                   style={[
                     styles.fontSize14,
@@ -87,16 +99,16 @@ export default function PaymentCar() {
                       fontSize: 16,
                     },
                   ]}>
-                  VND {params?.price}
+                  VND{' '}
+                  {(params.seatCount * params.data.seat_value).toLocaleString(
+                    'en-us',
+                  )}
                 </Text>
               </View>
             </View>
           </View>
         </View>
-        <Button
-          title={'Thanh Toán'}
-          onPress={() => navigate('BottomTabs' as never)}
-        />
+        <Button title={'Thanh Toán'} onPress={handlePayment} />
       </View>
     </View>
   );
@@ -124,5 +136,12 @@ const styles = StyleSheet.create({
   },
   price: {
     color: '#F4601F',
+  },
+  formatPrice: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 10,
   },
 });
