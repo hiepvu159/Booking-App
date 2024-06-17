@@ -26,7 +26,7 @@ export const getListRoom = (data: { hotel_id: number }) => {
 };
 
 export const paymentTicketHotel = (data: PaymentHotel) => {
-  return requestAuthorized.post('api/model/flight/pay', {
+  return requestAuthorized.post('model/flight/pay', {
     data,
   });
 };

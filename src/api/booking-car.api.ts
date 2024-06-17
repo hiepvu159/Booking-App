@@ -22,7 +22,7 @@ export const getListCatApi = (data: ListPlaneParams) => {
 };
 
 export const paymentTicketCar = (data: PaymentCar) => {
-  return requestAuthorized.post('api/model/car_travel/pay', {
+  return requestAuthorized.post('model/car_travel/pay', {
     data,
   });
 };

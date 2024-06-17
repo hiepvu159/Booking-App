@@ -23,7 +23,7 @@ export const getListTicketPlane = (data: ListPlaneParams) => {
 };
 
 export const paymentTicketPlane = (data: PaymentPlane) => {
-  return requestAuthorized.post('api/model/flight/pay', {
+  return requestAuthorized.post('model/flight/pay', {
     data,
   });
 };
