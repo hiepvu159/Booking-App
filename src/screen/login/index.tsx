@@ -23,7 +23,7 @@ export default function LoginScreen() {
       .string()
       .trim()
       .matches(
-        /^[A-Za-z]{8,20}$/,
+        /^[A-Za-z0-9]{8,20}$/,
         'Tên người dùng chỉ sử dụng chữ, độ dài từ 8 đến 20 kí tự',
       )
       .nullable()
@@ -46,15 +46,13 @@ export default function LoginScreen() {
 
   const onSubmit = useCallback(
     async (value: LoginParams) => {
-      navigate('BottomTabs');
-      // loginAPI({
-      //   username: value.username,
-      //   password: value.password,
-      // }).then(async (res) => {
-      //   await AsyncStorage.setItem('token', res.data.access_token);
-      //   navigate('BottomTabs');
-      // });
-      // .catch((err) => {});
+      loginAPI({
+        username: value.username,
+        password: value.password,
+      }).then(async (res) => {
+        await AsyncStorage.setItem('token', res.data.access_token);
+        navigate('BottomTabs');
+      });
     },
     [navigate],
   );
