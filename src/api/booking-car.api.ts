@@ -29,5 +29,7 @@ export const paymentTicketCar = (data: PaymentCar) => {
 
 export const getTicketBoughtCar = (data: { user_id: string }) => {
   const parmas = queryString.stringify(data);
-  return request.get<TicketCarModal[]>(`model/car_ticket/bought?${parmas}`);
+  return requestAuthorized.get<TicketCarModal[]>(
+    `model/car_ticket/bought?${parmas}`,
+  );
 };

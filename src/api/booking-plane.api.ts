@@ -24,7 +24,7 @@ export const getListTicketPlane = (data: ListPlaneParams) => {
 
 export const getTicketBoughtPlane = (data: { user_id: string }) => {
   const parmas = queryString.stringify(data);
-  return request.get<TicketPlaneModal[]>(
+  return requestAuthorized.get<TicketPlaneModal[]>(
     `model/flight_ticket/bought?${parmas}`,
   );
 };

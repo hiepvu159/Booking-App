@@ -33,5 +33,7 @@ export const paymentTicketHotel = (data: PaymentHotel) => {
 
 export const getTicketBoughtHotel = (data: { user_id: string }) => {
   const parmas = queryString.stringify(data);
-  return request.get<TicketHotelModal[]>(`model/room_ticket/bought?${parmas}`);
+  return requestAuthorized.get<TicketHotelModal[]>(
+    `model/room_ticket/bought?${parmas}`,
+  );
 };
