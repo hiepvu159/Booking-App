@@ -28,6 +28,9 @@ import RegisterScreen from '../screen/register';
 import { FORMAT_DATE } from '../screen/booking-plane';
 import moment from 'moment';
 import { HotelModel, HotelParams } from '../model/hotel.model';
+import TicketPlaneBought from '../screen/ticket-plane-bought';
+import TicketCarBought from '../screen/ticket-car-booking';
+import TicketHotelBought from '../screen/ticket-hotel-booking';
 
 export type RootStackParamList = {
   ListCar: CarParams;
@@ -92,6 +95,9 @@ export type RootStackParamList = {
     };
   };
   Register: any;
+  TicketPlane: any;
+  TicketCar: any;
+  TicketHotel: any;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -443,6 +449,49 @@ export default function Navigation() {
         component={SelectRoom}
         options={{
           title: 'Chọn loại phòng',
+          headerStyle: {
+            backgroundColor: '#5B9EDE',
+          },
+          headerTitleStyle: {
+            color: '#fff',
+          },
+          headerTintColor: '#fff',
+        }}
+      />
+
+      <Stack.Screen
+        name="TicketPlane"
+        component={TicketPlaneBought}
+        options={{
+          title: 'Vé máy bay đã mua',
+          headerStyle: {
+            backgroundColor: '#5B9EDE',
+          },
+          headerTitleStyle: {
+            color: '#fff',
+          },
+          headerTintColor: '#fff',
+        }}
+      />
+      <Stack.Screen
+        name="TicketHotel"
+        component={TicketHotelBought}
+        options={{
+          title: 'Phòng khách sạn đã đặt',
+          headerStyle: {
+            backgroundColor: '#5B9EDE',
+          },
+          headerTitleStyle: {
+            color: '#fff',
+          },
+          headerTintColor: '#fff',
+        }}
+      />
+      <Stack.Screen
+        name="TicketCar"
+        component={TicketCarBought}
+        options={{
+          title: 'Vé xe khách đã mua',
           headerStyle: {
             backgroundColor: '#5B9EDE',
           },

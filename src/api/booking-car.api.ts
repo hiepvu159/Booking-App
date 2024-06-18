@@ -1,6 +1,6 @@
 import queryString from 'query-string';
 import { request, requestAuthorized } from './request/config.api';
-import { CarModel } from '../model/car.model';
+import { CarModel, TicketCarModal } from '../model/car.model';
 
 export interface ListPlaneParams {
   start_location: string;
@@ -25,4 +25,9 @@ export const paymentTicketCar = (data: PaymentCar) => {
   return requestAuthorized.post('model/car_travel/pay', {
     data,
   });
+};
+
+export const getTicketBoughtCar = (data: { user_id: string }) => {
+  const parmas = queryString.stringify(data);
+  return request.get<TicketCarModal[]>(`model/car_ticket/bought?${parmas}`);
 };

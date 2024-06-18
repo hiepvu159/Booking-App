@@ -1,6 +1,6 @@
 import queryString from 'query-string';
 import { request, requestAuthorized } from './request/config.api';
-import { PlaneModel } from '../model/plane.model';
+import { PlaneModel, TicketPlaneModal } from '../model/plane.model';
 
 export interface ListPlaneParams {
   start_location: string;
@@ -20,6 +20,13 @@ export interface PaymentPlane {
 export const getListTicketPlane = (data: ListPlaneParams) => {
   const parmas = queryString.stringify(data);
   return request.get<PlaneModel[]>(`model/flight/search?${parmas}`);
+};
+
+export const getTicketBoughtPlane = (data: { user_id: string }) => {
+  const parmas = queryString.stringify(data);
+  return request.get<TicketPlaneModal[]>(
+    `model/flight_ticket/bought?${parmas}`,
+  );
 };
 
 export const paymentTicketPlane = (data: PaymentPlane) => {

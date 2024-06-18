@@ -1,4 +1,4 @@
-import { request } from './request/config.api';
+import { request, requestAuthorized } from './request/config.api';
 
 export interface LoginParams {
   username: string;
@@ -12,4 +12,8 @@ export const loginAPI = (data: LoginParams) => {
 
 export const registerAPI = (data: LoginParams) => {
   return request.post('identity/user/register', { data });
+};
+
+export const logoutAPI = () => {
+  return requestAuthorized.post('identity/user/logout');
 };

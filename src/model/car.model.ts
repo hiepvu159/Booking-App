@@ -20,3 +20,16 @@ export interface CarModel {
   seat_empty: number;
   seat_value: number;
 }
+export interface TicketCarModal {
+  id: number;
+  name: string;
+  car_travel_id: number;
+  start_location: string;
+  end_location: string;
+  time: any;
+  buyer_id: number;
+  seat_number: number;
+  ticket_value: number;
+  contact_with_name: string;
+  contact_with_phone: string;
+}

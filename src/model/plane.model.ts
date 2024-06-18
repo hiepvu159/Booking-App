@@ -22,3 +22,18 @@ export interface PlaneModel {
   seat_vip_empty: number;
   seat_vip_value: number;
 }
+
+export interface TicketPlaneModal {
+  id: number;
+  name: string;
+  flight_id: number;
+  start_location: string;
+  end_location: string;
+  time: any;
+  buyer_id: number;
+  seat_basic_number: number;
+  seat_vip_number: number;
+  ticket_value: number;
+  contact_with_name: string;
+  contact_with_phone: string;
+}
