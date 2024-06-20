@@ -3,8 +3,6 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import { TicketPlaneModal } from '../../model/plane.model';
 import CardInfoTicketPlane from './card-info-plane';
 import { getTicketBoughtPlane } from '../../api/booking-plane.api';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { jwtDecode } from 'jwt-decode';
 
 const data_fake: TicketPlaneModal[] = [
   {
@@ -23,18 +21,13 @@ const data_fake: TicketPlaneModal[] = [
   },
 ];
 export default function TicketPlaneBought() {
-  const token: any = AsyncStorage.getItem('token');
-  const userInfo: { id: string } = jwtDecode(token);
-
   const [listPlane, setListPlane] = useState<TicketPlaneModal[]>(data_fake);
 
   useEffect(() => {
-    getTicketBoughtPlane({
-      user_id: userInfo?.id,
-    })
+    getTicketBoughtPlane()
       .then((res) => setListPlane(res.data))
       .catch((err) => console.log(err));
-  }, [userInfo]);
+  }, []);
 
   return (
     <ScrollView>

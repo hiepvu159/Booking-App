@@ -31,6 +31,7 @@ import { HotelModel, HotelParams } from '../model/hotel.model';
 import TicketPlaneBought from '../screen/ticket-plane-bought';
 import TicketCarBought from '../screen/ticket-car-booking';
 import TicketHotelBought from '../screen/ticket-hotel-booking';
+import LikedHotelScreen from '../screen/liked-hotel';
 
 export type RootStackParamList = {
   ListCar: CarParams;
@@ -98,6 +99,7 @@ export type RootStackParamList = {
   TicketPlane: any;
   TicketCar: any;
   TicketHotel: any;
+  LikedHotel: any;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -492,6 +494,21 @@ export default function Navigation() {
         component={TicketCarBought}
         options={{
           title: 'Vé xe khách đã mua',
+          headerStyle: {
+            backgroundColor: '#5B9EDE',
+          },
+          headerTitleStyle: {
+            color: '#fff',
+          },
+          headerTintColor: '#fff',
+        }}
+      />
+
+      <Stack.Screen
+        name="LikedHotel"
+        component={LikedHotelScreen}
+        options={{
+          title: 'Khách sạn đã thích',
           headerStyle: {
             backgroundColor: '#5B9EDE',
           },

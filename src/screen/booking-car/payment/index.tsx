@@ -18,7 +18,6 @@ export default function PaymentCar() {
   const handlePayment = useCallback(() => {
     paymentTicketCar({
       contact_with_name: `${params.userContact.firstName} ${params.userContact.lastName}`,
-      user_id: 123124,
       car_travel_id: params.data.id,
       contact_with_phone: params.userContact.phoneNumber,
       seat_number: params.seatCount,

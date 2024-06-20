@@ -10,7 +10,6 @@ export interface ListPlaneParams {
 
 export interface PaymentCar {
   car_travel_id: number;
-  user_id: number;
   seat_number: number;
   contact_with_name: string;
   contact_with_phone: string;
@@ -27,9 +26,6 @@ export const paymentTicketCar = (data: PaymentCar) => {
   });
 };
 
-export const getTicketBoughtCar = (data: { user_id: string }) => {
-  const parmas = queryString.stringify(data);
-  return requestAuthorized.get<TicketCarModal[]>(
-    `model/car_ticket/bought?${parmas}`,
-  );
+export const getTicketBoughtCar = () => {
+  return requestAuthorized.get<TicketCarModal[]>(`model/car_ticket/bought`);
 };

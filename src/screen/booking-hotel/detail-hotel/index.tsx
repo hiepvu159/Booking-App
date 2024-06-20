@@ -16,10 +16,15 @@ import ModalFullScreen from '../../../components/modal-fullscreen';
 import SelectRoom from '../SelectRoom';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import ArrowRightIconSVG from '../../../../assets/svg/ArrowRightIconSVG';
+import HeartIconSVG from '../../../../assets/svg/HeartIconSVG';
+import { likeHotel } from '../../../api/booking-hotel.api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { jwtDecode } from 'jwt-decode';
 
 export default function DetailHotel() {
   const { params } = useRoute<RouteProp<RootStackParamList, 'DetailHotel'>>();
   const [isOpen, setIsOpen] = useState(false);
+  const [color, setColor] = useState('#292D32');
 
   const images: string[] = [
     'https://dyf.vn/wp-content/uploads/2021/11/thiet-ke-noi-that-phong-khach-san-hien-dai.jpg', // Local image
@@ -64,6 +69,12 @@ export default function DetailHotel() {
     );
   }, [onCloseModal]);
 
+  const likeHotelHandle = useCallback(() => {
+    likeHotel({
+      hotel_id: params.data.id,
+    }).then(() => setColor('#D62D00'));
+  }, [params]);
+
   return (
     <View
       style={{
@@ -81,20 +92,31 @@ export default function DetailHotel() {
         />
         <View style={{ padding: 15 }}>
           <View style={{ marginBottom: 10 }}>
-            <Text style={[styles.textInfo, { fontWeight: '600' }]}>
+            <Text
+              style={[styles.textInfo, { fontWeight: '600', fontSize: 18 }]}>
               {params.data.name}
             </Text>
             <View
               style={{
                 display: 'flex',
-                justifyContent: 'flex-start',
+                justifyContent: 'space-between',
                 flexDirection: 'row',
                 marginTop: 5,
               }}>
-              <LocationIconSVG />
-              <Text style={[{ marginTop: 2, fontSize: 13 }]}>
-                {params.data.location}
-              </Text>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  marginTop: 10,
+                }}>
+                <LocationIconSVG />
+                <Text style={[{ marginTop: 2, fontSize: 13 }]}>
+                  {params.data.location}
+                </Text>
+              </View>
+              <Button type="clear" onPress={likeHotelHandle}>
+                <HeartIconSVG color={color} />
+              </Button>
             </View>
           </View>
           <Divider />

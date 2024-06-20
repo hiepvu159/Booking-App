@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { jwtDecode } from 'jwt-decode';
 import { TicketCarModal } from '../../model/car.model';
 import CardInfoTicketCar from './card-car-bought';
 import { getTicketBoughtCar } from '../../api/booking-car.api';
@@ -22,18 +20,13 @@ const data_fake: TicketCarModal[] = [
   },
 ];
 export default function TicketCarBought() {
-  const token: any = AsyncStorage.getItem('token');
-  const userInfo: { id: string } = jwtDecode(token);
-
   const [listPlane, setListPlane] = useState<TicketCarModal[]>(data_fake);
 
   useEffect(() => {
-    getTicketBoughtCar({
-      user_id: userInfo?.id,
-    })
+    getTicketBoughtCar()
       .then((res) => setListPlane(res.data))
       .catch((err) => console.log(err));
-  }, [userInfo]);
+  }, []);
 
   return (
     <ScrollView>

@@ -112,6 +112,37 @@ export default function UserScreen() {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
+            navigate('LikedHotel');
+          }}>
+          <View
+            style={[
+              styles.card,
+              {
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              },
+            ]}>
+            <View
+              style={[
+                {
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                },
+              ]}>
+              {/* <EmailIconSVG color="#707173" /> */}
+              <Text
+                style={[{ fontWeight: '600', marginLeft: 10, fontSize: 14 }]}>
+                Khách sạn đã thích
+              </Text>
+            </View>
+            <ArrowRightForItemIconSVG color="#2571E8" />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
             logoutAPI().then(() => {
               AsyncStorage.removeItem('token');
               navigate('login');

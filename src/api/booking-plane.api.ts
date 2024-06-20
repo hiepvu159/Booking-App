@@ -10,7 +10,6 @@ export interface ListPlaneParams {
 
 export interface PaymentPlane {
   flight_id: number;
-  user_id: number;
   seat_basic_number: number;
   seat_vip_number: number;
   contact_with_name: string;
@@ -22,10 +21,9 @@ export const getListTicketPlane = (data: ListPlaneParams) => {
   return request.get<PlaneModel[]>(`model/flight/search?${parmas}`);
 };
 
-export const getTicketBoughtPlane = (data: { user_id: string }) => {
-  const parmas = queryString.stringify(data);
+export const getTicketBoughtPlane = () => {
   return requestAuthorized.get<TicketPlaneModal[]>(
-    `model/flight_ticket/bought?${parmas}`,
+    `model/flight_ticket/bought}`,
   );
 };
 

@@ -8,7 +8,6 @@ export interface ListHotelParams {
 
 export interface PaymentHotel {
   flight_id: number;
-  user_id: number;
   seat_basic_number: number;
   seat_vip_number: number;
   contact_with_name: string;
@@ -31,9 +30,14 @@ export const paymentTicketHotel = (data: PaymentHotel) => {
   });
 };
 
-export const getTicketBoughtHotel = (data: { user_id: string }) => {
-  const parmas = queryString.stringify(data);
-  return requestAuthorized.get<TicketHotelModal[]>(
-    `model/room_ticket/bought?${parmas}`,
-  );
+export const getTicketBoughtHotel = () => {
+  return requestAuthorized.get<TicketHotelModal[]>(`model/room_ticket/bought}`);
+};
+
+export const likeHotel = (data: { hotel_id: number }) => {
+  return requestAuthorized.post<TicketHotelModal[]>(`model/like`, { data });
+};
+
+export const getLikedHotel = () => {
+  return requestAuthorized.get<HotelModel[]>(`model/hotel/like}`);
 };

@@ -18,7 +18,6 @@ export default function PaymentPlane() {
   const handlePayment = useCallback(() => {
     paymentTicketPlane({
       contact_with_name: `${params.userContact.firstName} ${params.userContact.lastName}`,
-      user_id: 123124,
       flight_id: params.data.id,
       contact_with_phone: params.userContact.phoneNumber,
       seat_basic_number: params.seatBasicCount,
