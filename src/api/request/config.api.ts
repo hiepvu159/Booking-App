@@ -10,6 +10,10 @@ const getInstance = (baseUrl: string | undefined) => {
   const instance = axios.create({
     baseURL: baseUrl,
     timeout: 900000,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+    },
   });
   //   instance.interceptors.response.use(
   //     ResponseInterceptor.onFullFilled,
@@ -25,6 +29,8 @@ const getInstanceAuthorized = (baseUrl: string | undefined) => {
     baseURL: baseUrl,
     headers: {
       Authorization: token ? 'Bearer' + token : '',
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
     },
 
     timeout: 900000,
