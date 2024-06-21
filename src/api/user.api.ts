@@ -7,11 +7,11 @@ export interface LoginParams {
 }
 
 export const loginAPI = (data: LoginParams) => {
-  return request.post('identity/user/login', { data });
+  return request.post('identity/user/login', data);
 };
 
 export const registerAPI = (data: LoginParams) => {
-  return request.post('identity/user/register', { data });
+  return request.post('identity/user/register', data);
 };
 
 export const logoutAPI = () => {

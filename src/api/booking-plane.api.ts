@@ -28,7 +28,5 @@ export const getTicketBoughtPlane = () => {
 };
 
 export const paymentTicketPlane = (data: PaymentPlane) => {
-  return requestAuthorized.post('model/flight/pay', {
-    data,
-  });
+  return requestAuthorized.post('model/flight/pay', data);
 };

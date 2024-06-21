@@ -35,7 +35,7 @@ export const getTicketBoughtHotel = () => {
 };
 
 export const likeHotel = (data: { hotel_id: number }) => {
-  return requestAuthorized.post<TicketHotelModal[]>(`model/like`, { data });
+  return requestAuthorized.post<TicketHotelModal[]>(`model/like`, data);
 };
 
 export const getLikedHotel = () => {
