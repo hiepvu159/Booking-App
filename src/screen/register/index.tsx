@@ -10,7 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../navigations/Navigation';
 const defaultValues = {
-  username: '',
+  name: '',
   password: '',
   confirmPassword: '',
 };
@@ -19,7 +19,7 @@ export default function RegisterScreen() {
   const { navigate } = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const schema = yup.object().shape({
-    username: yup
+    name: yup
       .string()
       .matches(
         /^[A-Za-z0-9]{8,20}$/,
@@ -58,12 +58,15 @@ export default function RegisterScreen() {
   const onSubmit = useCallback(
     (value: LoginParams) => {
       registerAPI({
-        username: value.username,
+        name: value.name,
         password: value.password,
-      }).then(() => {
-        navigate('login');
-      });
-      // .catch((err) => {});
+      })
+        .then(() => {
+          navigate('login');
+        })
+        .catch((err) => {
+          console.log('🚀 ~ RegisterScreen ~ err:', err);
+        });
     },
     [navigate],
   );
@@ -85,7 +88,7 @@ export default function RegisterScreen() {
         <View style={{ width: '100%', alignItems: 'center' }}>
           <Text style={{ fontSize: 26, marginBottom: 20 }}>Đăng nhập</Text>
           <Controller
-            name="username"
+            name="name"
             control={control}
             render={({ fieldState, field }) => (
               <Input

@@ -11,7 +11,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../navigations/Navigation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const defaultValues = {
-  username: '',
+  name: '',
   password: '',
 };
 
@@ -19,7 +19,7 @@ export default function LoginScreen() {
   const { navigate } = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const schema = yup.object().shape({
-    username: yup
+    name: yup
       .string()
       .trim()
       .matches(
@@ -47,7 +47,7 @@ export default function LoginScreen() {
   const onSubmit = useCallback(
     async (value: LoginParams) => {
       loginAPI({
-        username: value.username,
+        name: value.name,
         password: value.password,
       }).then(async (res) => {
         await AsyncStorage.setItem('token', res.data.access_token);
@@ -74,7 +74,7 @@ export default function LoginScreen() {
         <View style={{ width: '100%', alignItems: 'center' }}>
           <Text style={{ fontSize: 26, marginBottom: 20 }}>Đăng nhập</Text>
           <Controller
-            name="username"
+            name="name"
             control={control}
             render={({ fieldState, field }) => (
               <Input

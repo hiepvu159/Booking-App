@@ -116,7 +116,7 @@ export default function ListCar() {
     getListCatApi({
       start_location: params.addressFrom,
       end_location: params.addressTo,
-      start_time: moment(params.dateFrom).toISOString(),
+      start_time: moment(params.dateFrom).unix(),
     }).then((res) => setListCar(res.data));
   }, [params]);
 

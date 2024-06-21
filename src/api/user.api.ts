@@ -1,7 +1,7 @@
 import { request, requestAuthorized } from './request/config.api';
 
 export interface LoginParams {
-  username: string;
+  name: string;
   password: string;
   reply_password?: string;
 }

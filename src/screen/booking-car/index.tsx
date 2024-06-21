@@ -121,7 +121,7 @@ export default function BookingCarScreen() {
               navigate('ListCar', {
                 addressFrom: valueAddressFrom,
                 addressTo: valueAddressTo,
-                dateFrom: moment(dateFrom).toISOString(),
+                dateFrom: moment(dateFrom).unix(),
                 // numberCustomer: numberCustomer,
               })
             }

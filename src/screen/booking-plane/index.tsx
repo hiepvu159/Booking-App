@@ -140,7 +140,7 @@ export default function BookingPlane() {
               navigate('ListPlane', {
                 addressFrom: valueAddressFrom,
                 addressTo: valueAddressTo,
-                dateFrom: moment(dateFrom).toISOString(),
+                dateFrom: moment(dateFrom).unix(),
                 // typeSeat: typeSeat,
                 // numberCustomer: numberCustomer,
               });
