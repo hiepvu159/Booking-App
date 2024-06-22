@@ -13,7 +13,7 @@ export default function CardPaymentPlane() {
   return (
     <View style={styles.container}>
       <Text style={styles.textInfo}>
-        {moment(params?.data.start_time).format(FORMAT_DATE)}
+        {moment.unix(params?.data.start_time).format(FORMAT_DATE)}
       </Text>
       <View style={{ display: 'flex', flexDirection: 'row' }}>
         <Text style={[styles.textInfo, styles.header, { marginTop: 5 }]}>
@@ -28,7 +28,8 @@ export default function CardPaymentPlane() {
       </View>
       <View style={{ marginTop: 5 }}>
         <Text style={[styles.textInfo, styles.textAlign]}>
-          Thời gian khởi hành : {moment(params.data.start_time).format('HH:mm')}
+          Thời gian khởi hành :{' '}
+          {moment.unix(params.data.start_time).format('HH:mm')}
         </Text>
         <Text style={[styles.textInfo, styles.textAlign]}>
           Thời gian di chuyển dự kiến : {params.data.estimate_time}{' '}

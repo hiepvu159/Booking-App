@@ -40,7 +40,7 @@ export default function CardItemCar({ data }: Props) {
             <Text>
               Thời gian dự kiến:{' '}
               <Text style={styles.textInfo}>
-                {moment(data.start_time).format(FORMAT_DATE)}
+                {data.estimate_time} {data.estimate_unit}
               </Text>
             </Text>
           </View>

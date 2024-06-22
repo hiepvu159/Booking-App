@@ -30,7 +30,7 @@ export default function CardItem({ data }: Props) {
           <Text>
             Thời gian khởi hành:{' '}
             <Text style={styles.textInfo}>
-              {moment(data?.start_time).format(FORMAT_DATE)}
+              {moment.unix(data?.start_time).format(FORMAT_DATE)}
             </Text>
           </Text>
         </View>

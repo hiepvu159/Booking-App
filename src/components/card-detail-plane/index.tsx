@@ -15,7 +15,7 @@ export default function CardDetailPlane() {
   return (
     <View style={styles.container}>
       <Text style={[styles.textInfo, styles.header]}>
-        {moment(data.start_time).format(FORMAT_DATE)}
+        {moment.unix(data.start_time).format(FORMAT_DATE)}
       </Text>
       <View style={{ display: 'flex', flexDirection: 'row' }}>
         <Text style={[styles.textInfo, styles.header, { marginTop: 10 }]}>
@@ -40,7 +40,8 @@ export default function CardDetailPlane() {
       </View>
       <View style={{ marginTop: 5 }}>
         <Text style={styles.textInfo}>
-          Thời gian khởi hành: {moment(data.start_time).format(FORMAT_TIME)}
+          Thời gian khởi hành:{' '}
+          {moment.unix(data.start_time).format(FORMAT_TIME)}
         </Text>
       </View>
       <View style={{ marginTop: 5 }}>
