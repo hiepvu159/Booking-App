@@ -1,6 +1,8 @@
 import queryString from 'query-string';
-import { request, requestAuthorized } from './request/config.api';
-import { PlaneModel, TicketPlaneModal } from '../model/plane.model';
+import { API_BASE_URL, request } from './request/config.api';
+import { PlaneModel } from '../model/plane.model';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 export interface ListPlaneParams {
   start_location: string;
@@ -21,12 +23,24 @@ export const getListTicketPlane = (data: ListPlaneParams) => {
   return request.get<PlaneModel[]>(`model/flight/search?${parmas}`);
 };
 
-export const getTicketBoughtPlane = () => {
-  return requestAuthorized.get<TicketPlaneModal[]>(
-    `model/flight_ticket/bought}`,
-  );
+export const getTicketBoughtPlane = async () => {
+  const token = await AsyncStorage.getItem('token');
+  return axios.get(`${API_BASE_URL}model/flight_ticket/bought`, {
+    headers: {
+      Authorization: token ? 'Bearer' + token : '',
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+    },
+  });
 };
 
-export const paymentTicketPlane = (data: PaymentPlane) => {
-  return requestAuthorized.post('model/flight/pay', data);
+export const paymentTicketPlane = async (data: PaymentPlane) => {
+  const token = await AsyncStorage.getItem('token');
+  return axios.post(`${API_BASE_URL}model/flight/pay`, data, {
+    headers: {
+      Authorization: token ? 'Bearer' + token : '',
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+    },
+  });
 };

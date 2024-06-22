@@ -1,4 +1,6 @@
-import { request, requestAuthorizedLogout } from './request/config.api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { API_BASE_URL, request } from './request/config.api';
+import axios from 'axios';
 
 export interface LoginParams {
   name: string;
@@ -14,6 +16,13 @@ export const registerAPI = (data: LoginParams) => {
   return request.post('identity/user/register', data);
 };
 
-export const logoutAPI = () => {
-  return requestAuthorizedLogout.post('identity/user/logout');
+export const logoutAPI = async () => {
+  const token = AsyncStorage.getItem('ref_token');
+  return axios.post(`${API_BASE_URL}identity/user/logou`, {
+    headers: {
+      Authorization: token ? 'Bearer' + ' ' + token : '',
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+    },
+  });
 };

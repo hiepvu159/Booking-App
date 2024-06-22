@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:5001/api/';
+export const API_BASE_URL = 'http://localhost:5001/api/';
 
 // import * as RequestInterceptor from './interceptors/request';
 // import * as ResponseInterceptor from './interceptors/response';
