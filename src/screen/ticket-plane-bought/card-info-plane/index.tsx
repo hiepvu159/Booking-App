@@ -16,7 +16,7 @@ export default function CardInfoTicketPlane({ data }: Props) {
         <Text>
           Thời gian khởi hành:{' '}
           <Text style={styles.textInfo}>
-            {moment(data?.time).format(FORMAT_DATE)}
+            {moment.unix(data?.time).format(FORMAT_DATE)}
           </Text>
         </Text>
       </View>

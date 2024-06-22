@@ -35,15 +35,11 @@ export const paymentTicketCar = async (data: PaymentCar) => {
 
 export const getTicketBoughtCar = async () => {
   const token = await AsyncStorage.getItem('token');
-  return axios.post(
-    `${API_BASE_URL}model/car_ticket/bought`,
-    {},
-    {
-      headers: {
-        Authorization: token ? 'Bearer' + ' ' + token : '',
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json',
-      },
+  return axios.get(`${API_BASE_URL}model/car_ticket/bought`, {
+    headers: {
+      Authorization: token ? 'Bearer' + ' ' + token : '',
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
     },
-  );
+  });
 };

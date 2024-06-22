@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import HomeScreen from '../screen/home';
+// import HomeScreen from '../screen/home';
 import Header from '../components/header/Header';
 import BookingPlane from '../screen/booking-plane';
 import UserScreen from '../screen/user';
@@ -11,7 +11,7 @@ import BookingHotelScreen from '../screen/booking-hotel';
 import CarIconSVG from '../../assets/svg/CarIconSVG';
 import HotelIconSVG from '../../assets/svg/HotelIconSVG';
 import UserIconSVG from '../../assets/svg/UserIconSVG';
-import HomeIConSVG from '../../assets/svg/HomeIconSVG';
+// import HomeIConSVG from '../../assets/svg/HomeIconSVG';
 import HeaderForSearch from '../components/header/HeaderForSearch';
 
 const Tab = createBottomTabNavigator();
@@ -37,7 +37,7 @@ export default function BottomNav() {
         // },
         tabBarLabelStyle: { paddingBottom: 5 },
       })}>
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Home"
         component={HomeScreen}
         options={{
@@ -45,7 +45,7 @@ export default function BottomNav() {
           tabBarIcon: () => <HomeIConSVG />,
           header: () => <Header />,
         }}
-      />
+      /> */}
       <Tab.Screen
         name="BookingPlane"
         component={BookingPlane}

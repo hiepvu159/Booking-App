@@ -36,9 +36,9 @@ export const getTicketBoughtPlane = async () => {
 
 export const paymentTicketPlane = async (data: PaymentPlane) => {
   const token = await AsyncStorage.getItem('token');
-  return axios.post(`${API_BASE_URL}model/flight/pay`, data, {
+  return axios.post('http://10.0.2.2:5001/api/model/flight/pay', data, {
     headers: {
-      Authorization: token ? 'Bearer' + ' ' + token : '',
+      Authorization: 'Bearer' + ' ' + token,
       'Access-Control-Allow-Origin': '*',
       'Content-Type': 'application/json',
     },

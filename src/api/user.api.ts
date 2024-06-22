@@ -13,6 +13,7 @@ export const loginAPI = (data: LoginParams) => {
 };
 
 export const registerAPI = (data: LoginParams) => {
+  console.log('🚀 ~ registerAPI ~ data:', data);
   return request.post('identity/user/register', data);
 };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import moment from 'moment';
-import { FORMAT_DATE } from '../../booking-plane';
+import { FORMAT_DATE_TIME } from '../../booking-plane';
 import { TicketCarModal } from '../../../model/car.model';
 
 interface Props {
@@ -16,7 +16,7 @@ export default function CardInfoTicketCar({ data }: Props) {
         <Text>
           Thời gian khởi hành:{' '}
           <Text style={styles.textInfo}>
-            {moment(data?.time).format(FORMAT_DATE)}
+            {moment.unix(data?.time).format(FORMAT_DATE_TIME)}
           </Text>
         </Text>
       </View>

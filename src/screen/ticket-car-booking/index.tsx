@@ -1,26 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { TicketCarModal } from '../../model/car.model';
 import CardInfoTicketCar from './card-car-bought';
 import { getTicketBoughtCar } from '../../api/booking-car.api';
 
-const data_fake: TicketCarModal[] = [
-  {
-    id: 123123,
-    name: 'AirPlane',
-    start_location: 'HA NOI',
-    end_location: 'HCM',
-    time: new Date(),
-    buyer_id: 113,
-    car_travel_id: 123123,
-    contact_with_name: 'gege',
-    seat_number: 10,
-    ticket_value: 15000000,
-    contact_with_phone: '123123123',
-  },
-];
 export default function TicketCarBought() {
-  const [listPlane, setListPlane] = useState<TicketCarModal[]>(data_fake);
+  const [listPlane, setListPlane] = useState<TicketCarModal[]>([]);
 
   useEffect(() => {
     getTicketBoughtCar()
@@ -31,9 +16,17 @@ export default function TicketCarBought() {
   return (
     <ScrollView>
       <View style={styles.container}>
-        {listPlane.map((item) => (
-          <CardInfoTicketCar data={item} key={item.id} />
-        ))}
+        {listPlane?.length ? (
+          listPlane.map((item) => (
+            <CardInfoTicketCar data={item} key={item.id} />
+          ))
+        ) : (
+          <View>
+            <Text style={{ color: '#000', fontSize: 20, textAlign: 'center' }}>
+              No Data
+            </Text>
+          </View>
+        )}
       </View>
     </ScrollView>
   );

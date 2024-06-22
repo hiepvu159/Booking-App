@@ -9,9 +9,9 @@ export interface ListHotelParams {
 }
 
 export interface PaymentHotel {
-  flight_id: number;
-  seat_basic_number: number;
-  seat_vip_number: number;
+  hotel_id: number;
+  room_basic_number: number;
+  room_vip_number: number;
   contact_with_name: string;
   contact_with_phone: string;
 }
@@ -28,7 +28,7 @@ export const getListRoom = (data: { hotel_id: number }) => {
 
 export const paymentTicketHotel = async (data: PaymentHotel) => {
   const token = await AsyncStorage.getItem('token');
-  return axios.post(`${API_BASE_URL}model/flight/pay`, data, {
+  return axios.post(`${API_BASE_URL}model/hotel/pay`, data, {
     headers: {
       Authorization: token ? 'Bearer' + ' ' + token : '',
       'Access-Control-Allow-Origin': '*',
@@ -39,7 +39,7 @@ export const paymentTicketHotel = async (data: PaymentHotel) => {
 
 export const getTicketBoughtHotel = async () => {
   const token = await AsyncStorage.getItem('token');
-  return axios.get(`${API_BASE_URL}model/room_ticket/boughty`, {
+  return axios.get(`${API_BASE_URL}model/room_ticket/bought`, {
     headers: {
       Authorization: token ? 'Bearer' + ' ' + token : '',
       'Access-Control-Allow-Origin': '*',

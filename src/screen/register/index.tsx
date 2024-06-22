@@ -9,10 +9,11 @@ import { LoginParams, registerAPI } from '../../api/user.api';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../navigations/Navigation';
+import { toastError, toastSuccess } from '../../helper/toast.config';
 const defaultValues = {
   name: '',
   password: '',
-  confirmPassword: '',
+  reply_password: '',
 };
 
 export default function RegisterScreen() {
@@ -37,7 +38,7 @@ export default function RegisterScreen() {
       .trim()
       .nullable()
       .required('Vui lòng nhập đầy đủ thông tin'),
-    confirmPassword: yup
+    reply_password: yup
       .string()
       .trim()
       .matches(
@@ -60,9 +61,15 @@ export default function RegisterScreen() {
       registerAPI({
         name: value.name,
         password: value.password,
-      }).then(() => {
-        navigate('login');
-      });
+        reply_password: value.reply_password,
+      })
+        .then(() => {
+          toastSuccess('Tạo thành công');
+          navigate('login');
+        })
+        .catch((err) => {
+          toastError(err);
+        });
     },
     [navigate],
   );
@@ -123,7 +130,7 @@ export default function RegisterScreen() {
             )}
           />
           <Controller
-            name="confirmPassword"
+            name="reply_password"
             control={control}
             render={({ fieldState, field }) => (
               <Input

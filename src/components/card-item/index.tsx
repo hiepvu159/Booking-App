@@ -4,7 +4,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { RootStackParamList } from '../../navigations/Navigation';
 import { PlaneModel } from '../../model/plane.model';
-import { FORMAT_DATE } from '../../screen/booking-plane';
+import { FORMAT_DATE_TIME } from '../../screen/booking-plane';
 import moment from 'moment';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -30,7 +30,7 @@ export default function CardItem({ data }: Props) {
           <Text>
             Thời gian khởi hành:{' '}
             <Text style={styles.textInfo}>
-              {moment.unix(data?.start_time).format(FORMAT_DATE)}
+              {moment.unix(data?.start_time).format(FORMAT_DATE_TIME)}
             </Text>
           </Text>
         </View>

@@ -18,10 +18,10 @@ export default function PaymentHotel() {
   const handlePayment = useCallback(() => {
     paymentTicketHotel({
       contact_with_name: `${params.userContact.firstName} ${params.userContact.lastName}`,
-      flight_id: params.data.id,
+      hotel_id: params.data.id,
       contact_with_phone: params.userContact.phoneNumber,
-      seat_basic_number: params.roomNor,
-      seat_vip_number: params.roomVip,
+      room_basic_number: params.roomNor,
+      room_vip_number: params.roomVip,
     })
       .then(() => {
         toastSuccess('Thanh toán thành công');

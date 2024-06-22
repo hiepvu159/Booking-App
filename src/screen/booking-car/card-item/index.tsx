@@ -7,7 +7,7 @@ import { RootStackParamList } from '../../../navigations/Navigation';
 import { CarModel } from '../../../model/car.model';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import moment from 'moment';
-import { FORMAT_DATE } from '../../booking-plane';
+import { FORMAT_DATE_TIME } from '../../booking-plane';
 
 interface Props {
   data: CarModel;
@@ -32,7 +32,7 @@ export default function CardItemCar({ data }: Props) {
             <Text>
               Thời gian khởi hành:{' '}
               <Text style={styles.textInfo}>
-                {moment.unix(data.start_time).format(FORMAT_DATE)}
+                {moment.unix(data.start_time).format(FORMAT_DATE_TIME)}
               </Text>
             </Text>
           </View>
