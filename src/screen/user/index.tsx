@@ -142,11 +142,14 @@ export default function UserScreen() {
           </View>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => {
-            logoutAPI().then(() => {
-              AsyncStorage.removeItem('token');
-              navigate('login');
-            });
+          onPress={async () => {
+            logoutAPI()
+              .then(() => {
+                AsyncStorage.removeItem('token');
+                AsyncStorage.removeItem('ref_token');
+                navigate('login');
+              })
+              .catch((err) => console.log(err));
           }}>
           <View
             style={[

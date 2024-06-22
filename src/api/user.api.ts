@@ -17,12 +17,16 @@ export const registerAPI = (data: LoginParams) => {
 };
 
 export const logoutAPI = async () => {
-  const token = AsyncStorage.getItem('ref_token');
-  return axios.post(`${API_BASE_URL}identity/user/logou`, {
-    headers: {
-      Authorization: token ? 'Bearer' + ' ' + token : '',
-      'Access-Control-Allow-Origin': '*',
-      'Content-Type': 'application/json',
+  const token = await AsyncStorage.getItem('ref_token');
+  return axios.post(
+    `${API_BASE_URL}identity/user/logout`,
+    {},
+    {
+      headers: {
+        Authorization: token ? 'Bearer' + ' ' + token : '',
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+      },
     },
-  });
+  );
 };

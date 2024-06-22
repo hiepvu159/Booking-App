@@ -9,6 +9,7 @@ import moment from 'moment';
 
 export default function CardPaymentPlane() {
   const { params } = useRoute<RouteProp<RootStackParamList, 'PaymentPlane'>>();
+  console.log(params.data.start_time);
 
   return (
     <View style={styles.container}>

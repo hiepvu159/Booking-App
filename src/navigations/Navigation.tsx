@@ -165,7 +165,7 @@ export default function Navigation() {
                       <Text style={styles.textTitle}>{params?.addressTo}</Text>
                     </View>
                     <Text style={styles.text}>
-                      {moment(params?.dateFrom).format(FORMAT_DATE)}
+                      {moment.unix(params?.dateFrom).format(FORMAT_DATE)}
                     </Text>
                   </View>
                 </View>
@@ -269,7 +269,7 @@ export default function Navigation() {
                       <Text style={styles.textTitle}>{params?.addressTo}</Text>
                     </View>
                     <Text style={styles.text}>
-                      {moment(params?.dateFrom).format(FORMAT_DATE)}
+                      {moment.unix(params?.dateFrom).format(FORMAT_DATE)}
                     </Text>
                   </View>
                 </View>

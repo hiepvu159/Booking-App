@@ -60,13 +60,9 @@ export default function RegisterScreen() {
       registerAPI({
         name: value.name,
         password: value.password,
-      })
-        .then(() => {
-          navigate('login');
-        })
-        .catch((err) => {
-          console.log('🚀 ~ RegisterScreen ~ err:', err);
-        });
+      }).then(() => {
+        navigate('login');
+      });
     },
     [navigate],
   );
