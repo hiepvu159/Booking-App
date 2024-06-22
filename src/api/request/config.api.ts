@@ -48,5 +48,31 @@ const getInstanceAuthorized = (baseUrl: string | undefined) => {
   return instance;
 };
 
+const getInstanceAuthorizedLogout = (baseUrl: string | undefined) => {
+  const token = AsyncStorage.getItem('ref_token');
+  const instance = axios.create({
+    baseURL: baseUrl,
+    headers: {
+      Authorization: token ? 'Bearer' + token : '',
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+    },
+
+    timeout: 900000,
+  });
+  //   instance.interceptors.request.use(
+  //     RequestInterceptor.addAccessToken,
+  //     RequestInterceptor.onRejected,
+  //   );
+
+  //   instance.interceptors.response.use(
+  //     ResponseInterceptor.onFullFilled,
+  //     ResponseInterceptor.onRejectedWithToken,
+  //   );
+
+  return instance;
+};
 export const request = getInstance(API_BASE_URL);
 export const requestAuthorized = getInstanceAuthorized(API_BASE_URL);
+export const requestAuthorizedLogout =
+  getInstanceAuthorizedLogout(API_BASE_URL);

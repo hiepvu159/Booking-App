@@ -51,6 +51,7 @@ export default function LoginScreen() {
         password: value.password,
       }).then(async (res) => {
         await AsyncStorage.setItem('token', res.data.access_token);
+        await AsyncStorage.setItem('ref_token', res.data.refresh_token);
         navigate('BottomTabs');
       });
     },
