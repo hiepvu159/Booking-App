@@ -1,6 +1,8 @@
 import queryString from 'query-string';
-import { request, requestAuthorized } from './request/config.api';
-import { HotelModel, RoomModel, TicketHotelModal } from '../model/hotel.model';
+import { API_BASE_URL, request } from './request/config.api';
+import { HotelModel, RoomModel } from '../model/hotel.model';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 export interface ListHotelParams {
   location: string;
@@ -24,20 +26,46 @@ export const getListRoom = (data: { hotel_id: number }) => {
   return request.get<RoomModel[]>(`model/room/search?${parmas}`);
 };
 
-export const paymentTicketHotel = (data: PaymentHotel) => {
-  return requestAuthorized.post('model/flight/pay', {
-    data,
+export const paymentTicketHotel = async (data: PaymentHotel) => {
+  const token = await AsyncStorage.getItem('token');
+  return axios.post(`${API_BASE_URL}model/flight/pay`, data, {
+    headers: {
+      Authorization: token ? 'Bearer' + ' ' + token : '',
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+    },
   });
 };
 
-export const getTicketBoughtHotel = () => {
-  return requestAuthorized.get<TicketHotelModal[]>(`model/room_ticket/bought}`);
+export const getTicketBoughtHotel = async () => {
+  const token = await AsyncStorage.getItem('token');
+  return axios.get(`${API_BASE_URL}model/room_ticket/boughty`, {
+    headers: {
+      Authorization: token ? 'Bearer' + ' ' + token : '',
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+    },
+  });
 };
 
-export const likeHotel = (data: { hotel_id: number }) => {
-  return requestAuthorized.post<TicketHotelModal[]>(`model/like`, data);
+export const likeHotel = async (data: { hotel_id: number }) => {
+  const token = await AsyncStorage.getItem('token');
+  return axios.post(`${API_BASE_URL}model/like`, data, {
+    headers: {
+      Authorization: token ? 'Bearer' + ' ' + token : '',
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+    },
+  });
 };
 
-export const getLikedHotel = () => {
-  return requestAuthorized.get<HotelModel[]>(`model/hotel/like}`);
+export const getLikedHotel = async () => {
+  const token = await AsyncStorage.getItem('token');
+  return axios.get(`${API_BASE_URL}model/hotel/like`, {
+    headers: {
+      Authorization: token ? 'Bearer' + ' ' + token : '',
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+    },
+  });
 };

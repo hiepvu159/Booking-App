@@ -1,6 +1,8 @@
 import queryString from 'query-string';
-import { request, requestAuthorized } from './request/config.api';
-import { CarModel, TicketCarModal } from '../model/car.model';
+import { API_BASE_URL, request } from './request/config.api';
+import { CarModel } from '../model/car.model';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 export interface ListPlaneParams {
   start_location: string;
@@ -20,12 +22,28 @@ export const getListCatApi = (data: ListPlaneParams) => {
   return request.get<CarModel[]>(`model/car_travel/search?${parmas}`);
 };
 
-export const paymentTicketCar = (data: PaymentCar) => {
-  return requestAuthorized.post('model/car_travel/pay', {
-    data,
+export const paymentTicketCar = async (data: PaymentCar) => {
+  const token = await AsyncStorage.getItem('token');
+  return axios.post(`${API_BASE_URL}model/car_travel/pay`, data, {
+    headers: {
+      Authorization: token ? 'Bearer' + ' ' + token : '',
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+    },
   });
 };
 
-export const getTicketBoughtCar = () => {
-  return requestAuthorized.get<TicketCarModal[]>(`model/car_ticket/bought`);
+export const getTicketBoughtCar = async () => {
+  const token = await AsyncStorage.getItem('token');
+  return axios.post(
+    `${API_BASE_URL}model/car_ticket/bought`,
+    {},
+    {
+      headers: {
+        Authorization: token ? 'Bearer' + ' ' + token : '',
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+      },
+    },
+  );
 };

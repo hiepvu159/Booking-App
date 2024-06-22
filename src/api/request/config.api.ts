@@ -41,7 +41,6 @@ const getInstanceAuthorized = async (baseUrl: string | undefined) => {
 
 const getInstanceAuthorizedLogout = async (baseUrl: string | undefined) => {
   const token = await AsyncStorage.getItem('ref_token');
-  console.log('🚀 ~ getInstanceAuthorizedLogout ~ token:', token);
   const instance = axios.create({
     baseURL: baseUrl,
     headers: {
@@ -53,7 +52,6 @@ const getInstanceAuthorizedLogout = async (baseUrl: string | undefined) => {
     timeout: 900000,
   });
 
-  console.log('🚀 ~ getInstanceAuthorizedLogout ~ instance:', instance);
   return instance;
 };
 
